@@ -210,6 +210,10 @@
   .modal p{margin-bottom:0.9rem;color:var(--ink);font-size:16px}
   .modal .talk-title{font-size:18px;font-style:italic;color:var(--green-deep);margin-bottom:0.9rem}
   .modal .block-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin:1.2rem 0 0.4rem}
+  .modal .info-block{background:var(--paper-soft);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.2rem}
+  .modal .info-block .block-label{margin-top:0}
+  .modal .info-block p{margin-bottom:0}
+  .modal .info-block + .info-block{margin-top:1rem}
 
   footer{text-align:center;padding:2.8rem 2.5rem 2.2rem;color:var(--muted);font-size:13px;letter-spacing:0.04em;border-top:1px solid var(--border)}
   .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem}
@@ -602,8 +606,8 @@ const DAYS = [
         label: "Session I",
         time: "09:00 – 11:25",
         slots: [
-          { time: "09:00 – 09:30", type: "break", title: "Welcome & registration" },
-          { time: "09:30 – 09:45", type: "break", title: "Institutional greetings" },
+          { time: "09:00 – 09:30", type: "info", title: "Welcome & registration" },
+          { time: "09:30 – 09:45", type: "info", title: "Institutional greetings" },
           { time: "09:45 – 10:30", type: "keynote", speakerIds: ["calame"] },
           { time: "10:30 – 10:50", type: "talk", speakerIds: ["rosamilia"] },
           { time: "10:50 – 11:10", type: "talk", speakerIds: ["depoli"] },
@@ -763,7 +767,7 @@ DAYS.forEach((day, i) => {
         .map(sp => `<span class="sp" data-speaker="${sp.id}">${sp.name}</span>`)
         .join(", ");
       const title = slot.title || (speakers[0] ? speakers[0].talk : "");
-      const typeLabel = slot.type === "keynote" ? "Plenary" : slot.type === "break" ? "Break" : "Talk";
+      const typeLabel = slot.type === "keynote" ? "Plenary" : slot.type === "break" ? "Break" : slot.type === "info" ? "" : "Talk";
 
       // First non-"assente" abstract among this slot's speakers, for the inline excerpt
       const abstract = speakers.map(sp => sp.abstract).find(a => a && a.toLowerCase() !== "assente");
@@ -775,7 +779,7 @@ DAYS.forEach((day, i) => {
       row.innerHTML = `
         <div class="talk-time">${slot.time}</div>
         <div>
-          <span class="talk-type ${slot.type}">${typeLabel}</span>
+          ${typeLabel ? `<span class="talk-type ${slot.type}">${typeLabel}</span>` : ""}
           <div class="talk-title">${title}</div>
           ${speakersHtml ? `<div class="talk-speakers">${speakersHtml}</div>` : ""}
         </div>
@@ -835,10 +839,14 @@ function openSpeaker(id) {
     <h2>${sp.name}</h2>
     <div class="affil">${sp.affil}</div>
     <div class="talk-title">${sp.talk}</div>
-    <div class="block-label">Abstract</div>
-    <p>${sp.abstract}</p>
-    <div class="block-label">Biography</div>
-    <p>${sp.bio}</p>`;
+    <div class="info-block">
+      <div class="block-label">Abstract</div>
+      <p>${sp.abstract}</p>
+    </div>
+    <div class="info-block">
+      <div class="block-label">Biography</div>
+      <p>${sp.bio}</p>
+    </div>`;
   overlay.classList.add("open");
 }
 
