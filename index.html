@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convegno — Linguaggio e Religione / Religione e Linguaggi — LARES</title>
-<meta name="description" content="Programma, relatori e informazioni pratiche del convegno internazionale «Linguaggio e Religione / Religione e Linguaggi», Bologna 23–24 novembre 2026, progetto LARES.">
-<meta property="og:title" content="Convegno — LARES">
-<meta property="og:description" content="Linguaggio e Religione / Religione e Linguaggi — Bologna, 23–24 novembre 2026">
+<title>Conference — Language and Religion / Religion and Languages — LARES</title>
+<meta name="description" content="Programme, speakers and practical information for the international conference «Language and Religion / Religion and Languages», Bologna, 23–24 November 2026, LARES project.">
+<meta property="og:title" content="Conference — LARES">
+<meta property="og:description" content="Language and Religion / Religion and Languages — Bologna, 23–24 November 2026">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f6f3ec'/><text x='50' y='68' font-family='Georgia,serif' font-size='60' font-weight='700' text-anchor='middle' fill='%231e3a35'>L</text></svg>">
@@ -105,49 +105,67 @@
   .day-tab:hover{color:var(--ink);border-color:var(--green-deep)}
   .day-tab.active{background:var(--green-deep);color:var(--paper);border-color:var(--green-deep)}
 
-  .schedule{max-width:820px;margin:0 auto 3rem;display:none}
+  /* Horizontal session layout */
+  .schedule{display:none}
   .schedule.active{display:block}
-  .slot{display:grid;grid-template-columns:110px 1fr;gap:1.5rem;padding:1.2rem 0;border-bottom:1px solid var(--border)}
+  .session-row{display:flex;gap:1.4rem;align-items:flex-start;overflow-x:auto;padding:0.5rem 0 1.8rem;scroll-snap-type:x proximity}
+  .session-row::-webkit-scrollbar{height:8px}
+  .session-row::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .session-col{flex:0 0 260px;scroll-snap-align:start;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid var(--border);border-radius:16px;padding:1.2rem 1.1rem;display:flex;flex-direction:column;gap:0.2rem}
+  .session-head{margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+  .session-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.06em;color:var(--ink)}
+  .session-time{font-size:13px;color:var(--muted);font-style:italic}
+  .session-col.break-col{flex:0 0 150px;align-items:center;justify-content:center;text-align:center;background:var(--paper-soft);border-style:dashed}
+  .break-col .session-name{color:var(--muted)}
+  .break-col .session-time{margin-top:0.2rem}
+
+  .slot{padding:0.7rem 0;border-bottom:1px solid var(--border);position:relative}
   .slot:last-child{border-bottom:none}
-  .slot-time{font-family:'Cinzel',serif;font-size:13px;color:var(--green-deep);letter-spacing:0.04em;padding-top:0.2rem}
-  .slot-body{}
-  .slot-type{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:0.3rem;display:inline-block}
+  .slot-time{font-family:'Cinzel',serif;font-size:11px;color:var(--green-deep);letter-spacing:0.03em;margin-bottom:0.2rem}
+  .slot-type{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin-bottom:0.15rem;display:inline-block}
   .slot-type.talk{color:var(--green-deep)}
   .slot-type.break{color:#b08a5a}
   .slot-type.keynote{color:#a8586b}
-  .slot-title{font-size:19px;margin-bottom:0.3rem;line-height:1.35}
-  .slot-title.clickable{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:4px;transition:text-decoration-color .2s}
-  .slot-title.clickable:hover{text-decoration-color:var(--green-deep)}
-  .slot-speakers{color:var(--muted);font-size:15px}
-  .slot-speakers .sp{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+  .slot-title{font-size:16px;margin-bottom:0.2rem;line-height:1.3}
+  .slot.has-abstract{cursor:pointer}
+  .slot.has-abstract .slot-title{text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px;transition:text-decoration-color .2s}
+  .slot.has-abstract:hover .slot-title{text-decoration-color:var(--green-deep)}
+  .slot-speakers{color:var(--muted);font-size:13px}
+  .slot-speakers .sp{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:2px}
   .slot-speakers .sp:hover{color:var(--green-deep);text-decoration-color:var(--green-deep)}
-  .slot-room{color:var(--muted);font-size:13px;font-style:italic;margin-top:0.25rem}
 
-  /* Speakers grid */
+  /* Abstract hover popover */
+  .abstract-pop{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(6px);width:300px;max-width:80vw;background:var(--ink-deep);color:var(--paper);font-size:13px;line-height:1.5;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 14px 34px rgba(18,33,30,0.35);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease, transform .18s ease;z-index:30}
+  .abstract-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--ink-deep)}
+  .slot.has-abstract:hover .abstract-pop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+  /* Speakers grid — uniform cards */
   .speaker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.6rem;max-width:1000px;margin:0 auto}
-  .speaker-card{background:rgba(255,255,255,0.38);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);border:1px solid rgba(255,255,255,0.55);border-radius:14px;box-shadow:0 1px 0 rgba(255,255,255,0.7) inset, 0 8px 24px rgba(30,58,53,0.07);padding:1.6rem;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease;position:relative;overflow:hidden}
+  .speaker-card{background:var(--paper-soft);border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 20px rgba(30,58,53,0.05);padding:1.6rem;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;position:relative;overflow:hidden}
   .speaker-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:0;background:var(--green-deep);transition:height .25s;border-radius:14px 0 0 14px}
   .speaker-card:hover::before{height:100%}
-  .speaker-card:hover{transform:translateY(-3px);box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, 0 14px 32px rgba(30,58,53,0.12)}
-  .speaker-card:nth-child(4n+1){background:var(--tint-1)}
-  .speaker-card:nth-child(4n+2){background:var(--tint-2)}
-  .speaker-card:nth-child(4n+3){background:var(--tint-3)}
-  .speaker-card:nth-child(4n+4){background:var(--tint-4)}
+  .speaker-card:hover{transform:translateY(-3px);border-color:var(--green-deep);box-shadow:0 14px 30px rgba(30,58,53,0.1)}
   .speaker-name{font-size:19px;font-weight:600;margin-bottom:0.2rem}
   .speaker-affil{color:var(--green-deep);font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.08em;display:block;margin-bottom:0.6rem}
   .speaker-talk{color:var(--muted);font-size:14px;font-style:italic}
 
+  @media (max-width:700px){
+    .session-row{gap:1rem}
+    .session-col{flex-basis:230px}
+  }
+
   /* Modal */
   .modal-overlay{position:fixed;inset:0;background:rgba(18,33,30,0.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:1.5rem}
   .modal-overlay.open{display:flex}
-  .modal{background:var(--paper);border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border)}
+  .modal{background:var(--paper);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border)}
   .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;line-height:1;font-family:'Cormorant Garamond',serif}
   .modal-close:hover{color:var(--ink)}
   .modal-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--green-deep);margin-bottom:0.6rem}
   .modal h2{font-size:26px;font-weight:600;margin-bottom:0.3rem}
   .modal .affil{color:var(--muted);font-style:italic;margin-bottom:1.2rem}
-  .modal p{margin-bottom:0.9rem;color:var(--ink)}
-  .modal .talk-title{font-size:18px;font-style:italic;color:var(--green-deep);margin-bottom:0.7rem}
+  .modal p{margin-bottom:0.9rem;color:var(--ink);font-size:16px}
+  .modal .talk-title{font-size:18px;font-style:italic;color:var(--green-deep);margin-bottom:0.9rem}
+  .modal .block-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin:1.2rem 0 0.4rem}
 
   footer{text-align:center;padding:2.8rem 2.5rem 2.2rem;color:var(--muted);font-size:13px;letter-spacing:0.04em;border-top:1px solid var(--border)}
   .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem}
@@ -175,9 +193,9 @@
     <img class="brand-logo" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='none'/><text x='0' y='68' font-family='Cinzel,serif' font-size='60' font-weight='700' fill='%231e3a35'>LARES</text></svg>" alt="LARES">
   </div>
   <nav>
-    <a class="nav-item" href="#programma">Programma</a>
-    <a class="nav-item" href="#relatori">Relatori</a>
-    <a class="nav-item" href="#info">Informazioni</a>
+    <a class="nav-item" href="#programme">Programme</a>
+    <a class="nav-item" href="#speakers">Speakers</a>
+    <a class="nav-item" href="#info">Information</a>
   </nav>
 </header>
 
@@ -185,13 +203,13 @@
 
 <div class="hero-dark">
   <div class="hero-dark-inner">
-    <div class="eyebrow">Convegno internazionale</div>
-    <h1 id="conf-title">Linguaggio e Religione / Religione e Linguaggi</h1>
-    <div class="dates" id="conf-dates">23–24 Novembre 2026 · Bologna</div>
-    <p class="lede" id="conf-lede">Due giornate di studio dedicate allo scambio e alla variazione lessicale nei fenomeni di inculturazione e acculturazione religiosa del mondo antico. Programma, relatori e informazioni pratiche per i partecipanti.</p>
+    <div class="eyebrow">International Conference</div>
+    <h1 id="conf-title">Language and Religion / Religion and Languages</h1>
+    <div class="dates" id="conf-dates">23–24 November 2026 · Bologna</div>
+    <p class="lede" id="conf-lede">Two days of study devoted to lexical exchange and variation in the phenomena of religious enculturation and acculturation in the ancient world. Programme, speakers and practical information for participants.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#programma">Vai al programma</a>
-      <a class="btn btn-outline" href="#relatori">Sfoglia i relatori</a>
+      <a class="btn btn-primary" href="#programme">View the programme</a>
+      <a class="btn btn-outline" href="#speakers">Browse the speakers</a>
     </div>
   </div>
 </div>
@@ -200,30 +218,26 @@
   <div class="content">
     <div class="info-strip reveal">
       <div class="info-card">
-        <div class="label">Date</div>
-        <div class="value" id="info-date">23–24 nov 2026</div>
+        <div class="label">Dates</div>
+        <div class="value" id="info-date">23–24 Nov 2026</div>
       </div>
       <div class="info-card">
-        <div class="label">Sede</div>
-        <div class="value" id="info-venue">Aula Prodi, Dip. di Storia e Culture</div>
+        <div class="label">Venue</div>
+        <div class="value" id="info-venue">Aula Prodi, Department of History and Cultures</div>
       </div>
       <div class="info-card">
-        <div class="label">Lingue</div>
-        <div class="value" id="info-lang">Italiano · Inglese</div>
-      </div>
-      <div class="info-card">
-        <div class="label">Iscrizione</div>
-        <div class="value"><a id="info-reg" href="#">Modulo di registrazione</a></div>
+        <div class="label">Languages</div>
+        <div class="value" id="info-lang">Italian · English · French</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="programma">
+<section id="programme">
   <div class="content">
     <div class="section-block reveal">
-      <div class="section-title">Programma</div>
-      <p class="section-sub">Seleziona una giornata per consultare le sessioni. Clicca su un intervento o su un nome per i dettagli.</p>
+      <div class="section-title">Programme</div>
+      <p class="section-sub">Select a day to view the sessions. Click on a talk or a speaker's name for details.</p>
     </div>
 
     <div class="day-tabs reveal" id="day-tabs"></div>
@@ -231,11 +245,11 @@
   </div>
 </section>
 
-<section id="relatori">
+<section id="speakers">
   <div class="content">
     <div class="section-block reveal">
-      <div class="section-title">Relatori</div>
-      <p class="section-sub">Clicca su una scheda per leggere la biografia e il titolo dell'intervento.</p>
+      <div class="section-title">Speakers</div>
+      <p class="section-sub">Click on a card to read the biography, abstract and talk title.</p>
     </div>
     <div class="speaker-grid reveal" id="speaker-grid"></div>
   </div>
@@ -245,7 +259,7 @@
 
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
-    <button class="modal-close" id="modal-close" aria-label="Chiudi">&times;</button>
+    <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
     <div id="modal-content"></div>
   </div>
 </div>
@@ -254,83 +268,409 @@
   <div class="footer-links">
     <a href="mailto:giuseppina.viscardi@unibo.it">Email</a>
   </div>
-  <div>Convegno «Linguaggio e Religione / Religione e Linguaggi» — progetto LARES</div>
+  <div>Conference «Language and Religion / Religion and Languages» — LARES project</div>
   <div class="footer-affil">Alma Mater Studiorum — Università di Bologna</div>
 </footer>
 
 <script>
 /* =========================================================================
-   DATI DEL CONVEGNO
-   Modifica solo questa sezione per aggiornare programma e relatori.
-   Ogni relatore ha un "id" univoco (slug) usato per collegare talk <-> bio.
+   CONFERENCE DATA
+   Edit only this section to update the programme and the speakers.
+   Each speaker has a unique "id" (slug) used to link talk <-> bio.
+   Fields left as "assente" mean the corresponding data was not yet
+   provided in the source spreadsheet.
    ========================================================================= */
+
 const SPEAKERS = [
   {
-    id: "viscardi",
-    name: "Giuseppina Viscardi",
-    affil: "Alma Mater Studiorum — Università di Bologna",
-    bio: "Professoressa associata in Storia delle religioni presso l'Alma Mater Studiorum, Università di Bologna, Dipartimento di Storia e Culture. Coordinatrice del progetto LARES. Temi di ricerca: politeismi antichi, narrazioni greche, paesaggio religioso, acculturazione classica.",
-    talk: "Titolo dell'intervento da definire"
+    id: "calame",
+    name: `Claude Calame`,
+    affil: `École des Hautes Études en Sciences Sociales`,
+    talk: `Religion grecque et culture du chant: la tragédie attique entre récit héroïque et rituel`,
+    abstract: `Dans la Grèce classique, les pratiques discursives qui s'adressent aux divinités du panthéon en les mettant en scène, et que nous plaçons sous l’intitulé de la religion, assument une forme poétique. Elles correspondent à des performances rituelles. Ainsi en va-t-il de la tragédie attique, exécutée à l’occasion d’un concours rituel honorant Dionysos Éleuthéreus. À l’exemple des Euménides composées par le poète Eschyle, il s'agira de montrer qu’en particulier par les chants choraux, rituellement dansés, la dramatisation tragique d’une action héroïque dans le cadre d’un sanctuaire-théâtre est un acte aussi bien religieux que politique.`,
+    bio: `Directeur d'études à l'EHESS à Paris, Claude Calame a enseigné aux Universités d'Urbino, Lausanne et Yale, centrant ses travaux sur une anthropologie historique des formes poétiques grecques.`
   },
   {
-    id: "esempio-madrid",
-    name: "Nome Cognome",
-    affil: "Universidad Complutense de Madrid",
-    bio: "Breve biografia del relatore/della relatrice. Sostituisci questo testo con i dati reali.",
-    talk: "Titolo dell'intervento da definire"
+    id: "rosamilia",
+    name: `Emilio Rosamilia`,
+    affil: `Università di Bologna`,
+    talk: `Pianificare l'anno, gestire i sacrifici. Calendari sacrificali e loro estratti nel mondo greco.`,
+    abstract: `assente`,
+    bio: `assente`
   },
   {
-    id: "esempio-helsinki",
-    name: "Nome Cognome",
-    affil: "Helsingin Yliopisto",
-    bio: "Breve biografia del relatore/della relatrice. Sostituisci questo testo con i dati reali.",
-    talk: "Titolo dell'intervento da definire"
+    id: "depoli",
+    name: `Mattia De Poli`,
+    affil: `Università di Bologna`,
+    talk: `La preghiera di protesta nella tragedia di Euripide`,
+    abstract: `La preghiera è una modalità discorsiva ampiamente documentata nella tragedia attica di V sec. a.C. Quella di protesta è un tipo di preghiera, identificato da F. Chapot e B. Laurot nel Corpus de prières grècques et romaines (2001), che si trova già nell'epica omerica, in particolare nell'Iliade, ma non è estraneo alla tragedia. Considerando in particolare il caso di Eur. HF 339-347, si intende mettere a confronto questo passo con altri testi tragici, epici o lirici, per valutarne la funzione drammaturgica nel contesto specifico dell'opera e per ricostruire le possibili reazioni del pubblico.`,
+    bio: `Formatosi all'Università di Padova, dove si è laureato (2004), ha conseguito il dottorato di ricerca (2008) e ha ottenuto due assegni di ricerca (2009-2013), lì è stato anche ricercatore (Rtd-A) dal 2017 al 2021. Dopo una breve parentesi come Rtd-B di Filologia classica presso l'Università degli Studi di Torino tra il 2021 e il 2022, è approdato l'Alma Mater Studiorum - Università di Bologna prima come Rtd-B (2022-2024) e poi come Professore associato (dal 2024) di Lingua e letteratura greca. Tra i principali interessi di studio c'è il teatro, in particolare la tragedia di Euripide e la commedia di Menandro, e la ricezione della civiltà greca antica nella letteratura e nel teatro dell'età moderna e contemporanea.`
   },
   {
-    id: "esempio-cracovia",
-    name: "Nome Cognome",
-    affil: "Uniwersytet Jagielloński w Krakowie",
-    bio: "Breve biografia del relatore/della relatrice. Sostituisci questo testo con i dati reali.",
-    talk: "Titolo dell'intervento da definire"
-  }
+    id: "bigoni",
+    name: `Laura Bigoni`,
+    affil: `​​Université de Fribourg`,
+    talk: `Knowing, Understanding, and Experiencing in the Greek Bible`,
+    abstract: `In Exodus, God grants Bezalel the gift of his Spirit with “wisdom, understanding, and knowledge in every kind of craftsmanship” so that he may serve as a craftsman for the sacred objects of the sanctuary (Exod 31:3). The passage refers to three Hebrew roots describing knowledge (chokmah, tabuwn, and da‘ath), which the translators of the Septuagint rendered into Greek as σοφία, σύνεσις, and ἐπιστήμη. This paper aims to present some work in progress on the semantics of these roots pertaining to knowledge and understanding in the Greek translation of the Hebrew Scriptures, with emphasis on how they relate to each other in the text and how they are adapted to a religious context.`,
+    bio: `After a degree in Greek Philology at the University of Bologna, Laura Bigoni obtained a PhD in History of Religions from the University of Strasbourg in 2024. Following a period of research at the University of Bologna as part of the PRIN project “Resilient Septuagint”, she is now assistant professor at the University of Fribourg, Switzerland, where she teaches Biblical Hebrew. She collaborates on various projects promoted by the Fondazione per le scienze religiose (Bologna/Palermo) and co-directs a Master’s programme titled "Jewish and Christian Scriptures: History, Exegesis, Reception". Her research interests focus primarily on Greek lexicography and the tradition and reception of the Septuagint.`
+  },
+  {
+    id: "bons",
+    name: `Eberhard Bons`,
+    affil: `Université de Strasbourg`,
+    talk: `Communicating the Divine in the Septuagint Between Tradition and Innovation`,
+    abstract: `The aim of this paper is to illustrate the challenges faced by the translators of the Septuagint Bible with regard to the language of the divine, in light of the Greek-Hellenistic cultural and linguistic context. In particular, the terminology and concepts used to delineate the boundary between the divine and the human spheres will be examined, as well as certain titles attributed to the God of Israel. Particular attention will also be devoted to specific innovations introduced by the translators, whose implications extend to the narrative, exegetical, and theological levels. In some cases, these choices contribute to delineating a contrast between the Lord of heaven and earthly rulers, thereby actualizing the message of the Hebrew-Aramaic text.`,
+    bio: `assente`
+  },
+  {
+    id: "scialabba",
+    name: `Daniela Scialabba`,
+    affil: `Pontificio Istituto Biblico di Roma`,
+    talk: `Communicating the Divine in the Septuagint Between Tradition and Innovation`,
+    abstract: `The aim of this paper is to illustrate the challenges faced by the translators of the Septuagint Bible with regard to the language of the divine, in light of the Greek-Hellenistic cultural and linguistic context. In particular, the terminology and concepts used to delineate the boundary between the divine and the human spheres will be examined, as well as certain titles attributed to the God of Israel. Particular attention will also be devoted to specific innovations introduced by the translators, whose implications extend to the narrative, exegetical, and theological levels. In some cases, these choices contribute to delineating a contrast between the Lord of heaven and earthly rulers, thereby actualizing the message of the Hebrew-Aramaic text.`,
+    bio: `assente`
+  },
+  {
+    id: "mambelli",
+    name: `Anna Mambelli`,
+    affil: `Università di Bologna`,
+    talk: `Communicating the Divine in the Septuagint Between Tradition and Innovation`,
+    abstract: `The aim of this paper is to illustrate the challenges faced by the translators of the Septuagint Bible with regard to the language of the divine, in light of the Greek-Hellenistic cultural and linguistic context. In particular, the terminology and concepts used to delineate the boundary between the divine and the human spheres will be examined, as well as certain titles attributed to the God of Israel. Particular attention will also be devoted to specific innovations introduced by the translators, whose implications extend to the narrative, exegetical, and theological levels. In some cases, these choices contribute to delineating a contrast between the Lord of heaven and earthly rulers, thereby actualizing the message of the Hebrew-Aramaic text.`,
+    bio: `Anna Mambelli is Assistant Professor in Ancient Christian Literature at the University of Modena and Reggio Emilia and an Affiliated Researcher at FSCIRE, Bologna. She teaches "Digital Humanities for Religious Studies" at the University of Bologna. She is the Scientific Coordinator of the Historical and Theological Lexicon of the Septuagint (Mohr Siebeck, 2020–), Deputy Editor of the journal Annali di Storia dell’Esegesi (EDB), and the author of the monograph Vedere sogni. Esegesi di Daniele 2 e 4 Old Greek (Marietti1820, 2025).`
+  },
+  {
+    id: "camassa",
+    name: `Giorgio Camassa`,
+    affil: `Università di Udine`,
+    talk: `Celsus and Origen: The Body and the Horizon of Salvation`,
+    abstract: `Celsus and Origen (II-III centuries A.D.) can be assumed, on the basis of their works, as witnesses of two opposing worldviews. The former excludes any active intervention by God in the world, hypostatizing the existing state of things, while rigorously focusing on the necessary care of the soul by the human being. It also rejects the possibility that humankind may rely on the body — or the flesh — in order to attain the goal towards which it must strive, and mocks belief in both the incarnation and the resurrection as irrational and blasphemous. By contrast, the latter worldview is multifaceted. On the one hand, the body is seen as a burden, to the extent that rational beings may fall into a soma as a consequence of the original infringement that the exercise of free will led them to; while on the other hand, the body is also a result of the divine creation, as such pre-ordained to produce good. However, from the beginning the Son has pervaded the world in its material consistency, until the crucial event of the incarnation intervenes; at the end of times, resurrection will undoubtedly occur, in virtue of which the body (or in any case a body) once again takes centre stage, because creaturely existence may not be dissociated from bodily endowment. Starting from this complex and at least partially aporetic picture, a tendency emerges — within the second worldview, considered here from the point of view of Origen — to solve any persistent problems by denying that matter is the cause of evil and claiming on behalf of this body born of the Virgin the capacity to save humankind.`,
+    bio: `Giorgio Camassa (Roma 1951) è stato a lungo ordinario di Storia greca presso l’Università di Udine, dove ha insegnato anche Storia delle religioni del mondo antico. L’ultimo dei suoi studi, intitolato Statuto del corpo e annuncio di salvezza, è apparso per i tipi de «L’Erma» di Bretschneider (I-II, 2022-2025).`
+  },
+  {
+    id: "tommasi",
+    name: `Chiara Ombretta Tommasi`,
+    affil: `Università di Pisa`,
+    talk: `Assente, vuole palrare di Lunedì`,
+    abstract: `assente`,
+    bio: `assente`
+  },
+  {
+    id: "mari",
+    name: `Manuela Mari`,
+    affil: `Università di Bologna`,
+    talk: `In search of shared solutions. Questions and answers, insights into the past and guidance for the future in ancient Greek ‘oracular tales’.`,
+    abstract: `Oracle responses, particularly those from Delphi, are ubiquitous in Greek literary sources (mainly in historiography). Starting from the premise that, as M. Giangiulio has observed, “oracles and oracular tales were a crucial aspect of the way the Greeks conceived of the past and preserved its memory”, that is, of the way they organised their historical memory, this work focuses on how, within that memory, the interaction between the human and the divine—which precedes and prepares crucial decisions and important initiatives at both the public and privat levels —is represented in ‘oracular tales’. ‘Oracle tales’ in literary sources, as well as some significant epigraphic evidence, present oracular consultation as a useful (or necessary) intermediate stage in decision-making processes. In some cases, this stage involves seeking authoritative confirmation of decisions already taken; in others, suggestively, the consultation of the oracle involves a genuine ‘negotiation’ between men and the divine; in yet other cases, the consultation of the oracle serves as a means of managing private disputes and conflicts and, where possible, reaching a shared solution. The language of the oracle – seemingly enigmatic – was in fact perceived as a lofty and complex form of logic: its very complexity stimulates man to draw upon a higher knowledge, and in particular to read the future starting from a deep (and rational) understanding of the past and the present.`,
+    bio: `Manuela Mari insegna Storia greca, Storia ellenistica e Storia economica del mondo antico all’Università di Bologna; ha insegnato nelle Università di Cassino e del Lazio Meridionale e di Bari “Aldo Moro”. Tra i suoi temi di studio vi sono la storia e le istituzioni della Macedonia dall’età arcaica all’età romana; la storia politica e culturale del mondo ellenistico; la colonizzazione greca; la storiografia classica ed ellenistica; le relazioni tra religione e politica nella Grecia antica e nelle narrazioni storiografiche connesse.`
+  },
+  {
+    id: "borgatti",
+    name: `Caterina Borgatti`,
+    affil: `Università di Torino`,
+    talk: `Comunicazione e divinità oracolari, formule e pratiche in condivisione tra Asclepio e Serapide nell’epoca ellenistica`,
+    abstract: `Studiando i culti isiaci a Delo emergono due espressioni particolarmente legate a tali contesti, kata prostagma e therapeia. Tali elementi sono presenti anche in relazione ai culti delle divinità siriache sull’isola. Questi stessi elementi poi emergono in relazione ai culti isiaci anche nel resto del mondo greco, e dove si trovano legati anche ad altri culti, in particolare quelli di Asclepio. La presenza di questi elementi testuali nelle attestazioni dei culti isiaci e del culto di Asclepio può delineare una comunanza di linguaggio nelle due tipologie di culto? La possibile comunanza di linguaggio potrebbe implicare una simile ritualità? L’elemento oracolare, fondamentale per entrambi i culti, è centrale nell’utilizzo della formula kata prostagma, ma l’utilizzo della medesima formula implica anche una simile pratica cultuale? La stessa domanda può sorgere di fronte ai therapeutai, semplici fedeli in alcuni santuari, organizzati in koina in altri, ma accomunati sempre dalla medesima definizione, anch’essa non esclusiva ma strettamente legata ai culti isiaci e al culto di Asclepio. Indagare questi aspetti può portare a una riflessione sul rapporto tra linguaggio, culto e rito, che può assumere forme di causalità o reciprocità a seconda dei contesti.`,
+    bio: `assente`
+  },
+  {
+    id: "kajava",
+    name: `Mika Kajava`,
+    affil: `University of Helsinki`,
+    talk: `Touching and Being Touched by the Divine: Forms and Languages of Physical Sensory Mediation between Humans and Gods in the Ancient World`,
+    abstract: `This contribution examines physical contact between humans and gods and their manifestations in myths and historical sources from antiquity (e.g. Zeus Ephaptor; the healing touch of the deity; contact — supplicatory or hostile — with cult statues). The topic is investigated through literary, epigraphic, and visual examples, with particular attention to the typology and terminology of the descriptions of contact.`,
+    bio: `Mika Kajava has been Professor of Greek Language and Literature at the University of Helsinki since 2005. Previously, he was Professor of Ancient Languages and Culture at the University of Turku and Director of the Finnish Institute in Rome. He has published extensively in the fields of ancient epigraphy, religion, and onomastics. Over the last two decades, his research has focused especially on various aspects of Greek and Latin sacred dedications.`
+  },
+  {
+    id: "cristofori",
+    name: `Alessandro Cristofori`,
+    affil: `Università di Bologna`,
+    talk: `La parola contro il concorrente. Discorso magico e rivalità economica nelledefixiones greche e latine`,
+    abstract: `Le defixiones in cui la rivalità commerciale, artigianale o professionale costituisce il movente del maleficio offrono una finestra altrimenti difficilmente accessibile su dinamiche di conflitto sociale che le fonti letterarie antiche raramente registrano. L'intervento intende esaminare in che modo il lessico della concorrenza economica — termini come quaestum e lucrum, o le designazioni professionali dei defissi — penetri nelle forme del discorso magico-religioso e ne venga a sua volta trasformato, senza che ciò produca un formulario sostanzialmente distinto da quello delle altre categorie di maledizioni. Attraverso l'analisi di una selezione di testi greci e latini, si mostrerà come queste laminette plumbee restituiscano un mondo di artigiani, piccoli commercianti, tenutarie di locande e prostitute — strati sociali subalterni per i quali il ricorso alla parola maledicente rappresentava una rilevante arma contro il rivale. Nell'ambito dei processi comunicativi e dei contesti esperienziali che il convegno intende esplorare, queste pratiche discorsive collocate ai margini della religiosità ufficiale si rivelano luoghi di negoziazione semantica in cui il linguaggio del sacro e quello del mercato si intrecciano in forme di straordinaria densità antropologica.`,
+    bio: `assente`
+  },
+  {
+    id: "gordillo",
+    name: `Rocío Gordillo Hervás`,
+    affil: `Pablo de Olavide University Sevilla`,
+    talk: `The agon as an instrument of religious dialogue in the Roman Empire`,
+    abstract: `Attention will be given to the Augustan and Tiberian period, when the reconfiguration of Roman religion formed part of a broader project of cultural renewal. The transfer, selection, and preservation of prophetic texts under Augustus and Tiberius may be understood as an attempt to domesticate inspired speech by placing it within a new institutional, archival, and interpretative framework.`,
+    bio: `Rocío Gordillo Hervás è docente presso il dipartimento di Storia Antica dell’Università Pablo de Olavide. Attualmente è coordinatrice del Master in Scienze delle Religioni della stessa università e co-ricercatrice principale del progetto "Discursos del Imperio Romano en Acción: La Construcción del Orbe Romano"`
+  },
+  {
+    id: "gimenez",
+    name: `Pedro Giménez De Aragón Sierra`,
+    affil: `Pablo de Olavide University Sevilla`,
+    talk: `Origini della teologia dogmatica. Cherem-anatema dei minim-eretici tra II e V secolo`,
+    abstract: `Based on the analysis of the evolution of the Hebrew and Greek concepts huqqat-threskeia, pistis-emunah, kherem-anatema, we will look at the consequences they had on the consolidation of the Judeo-Christian conceptual category of heresy, along with the resulting condemnation of the minim-haereses by the dogmatic theology that took over the theopoetry of the religions of Antiquity.`,
+    bio: `Di solito insegno "Storia delle religioni del Mediterraneo" nell'ultimo corso della Laurea di Geografia e Storia all'Università Pablo de Olavide di Siviglia e materie come "Giudasimo" e "Cristianesimo" nel Master interuniversitario in Scienze delle Religioni diretto dall'Università Pablo de Olavide di Siviglia. Ho pubblicato i seguenti libri: "Che cos'è l'ebraismo" (2022), "Storia delle religioni del Mediterraneo" (2022), "Qumrán e le radici del pensiero politico judeocristiano" (2013), "La 'Storia della Salvezza', un'antica fonte judeocristiana. Traduzione e commento di 'Recognitiones' I 27-42,2" (2007), oltre a numerosi articoli in riviste accademiche visibili sul sito academia.edu.`
+  },
+  {
+    id: "arcari",
+    name: `Luca Arcari`,
+    affil: `Università di Napoli Federico II`,
+    talk: `Religious Experience and Processes of Textualization between Judaism and Proto-Christianity: Apocalypses and First-Person Divine Encounters`,
+    abstract: `This paper explores the relationship between religious experience and processes of textualization in Jewish and proto-Christian apocalyptic traditions. Rather than treating visionary texts as straightforward records of extraordinary experiences, it investigates how first-person encounters with the divine were shaped, narrated, and transmitted through literary forms. The Hellenistic-Roman world provided a rich cultural environment for such processes, in which religious experiences circulated through oral performances, written texts, ritual practices, and communal acts of interpretation. Recent developments in the study of lived religion, ritual theory, and neurohistory have drawn renewed attention to experience as a fundamental mode of symbolic communication. Experiences are no longer understood merely as the enactment of textual scripts; rather, texts themselves can be seen as cultural technologies that organize, modulate, and give meaning to embodied forms of perception and cognition. From this perspective, apocalypses and revelatory narratives occupy a privileged position, since they place first-person experiences of divine contact at the center of their literary construction. The paper examines how visionary texts transform experiences of revelation into authoritative narratives. Through journeys to heavenly realms, encounters with angels, auditions of divine speech, and disclosures of hidden knowledge, apocalyptic literature creates textual spaces in which experiences become communicable and socially meaningful. Such narratives do not simply reflect prior experiences; they actively reshape them, providing models through which readers and listeners may imagine, interpret, and reproduce encounters with the divine. By focusing on the interplay between experience and textualization, the paper argues that Jewish and proto-Christian apocalypses functioned as powerful mediating devices between individual experience and collective religious memory. Their first-person discourse not only claims access to transcendent realities but also contributes to the construction, transmission, and remodulation of religious experience within the broader cultural horizon of the Hellenistic-Roman world.`,
+    bio: `Luca Arcari (b. 1977) is Full Professor of History of Christianity at the Department of Humanities of Federico II University in Naples, where he has been teaching since 2013. He studied Classics and Ancient History at the University of Naples "Federico II" (1996–2000) and he received his Ph.D. in Second Temple Judaism and Early Christianity at the Department of History "Ettore Lepore", University of Naples Federico II (2001). He also studied at the Pontifical Biblical Institute in Rome (Biblical Hebrew, Aramaic, Coptic and Syriac; 2002-03) and he received scholarships from the Italian Academy of Lincei in Rome (2010-11) and the "Michele Pellegrino" Foundation (University of Turin, 2011-13). His research interests lie mainly in the field of Jewish (and proto-Christian) visionary texts, Jewish-Hellenistic literature, New Testament and Early Christian Apocrypha and/or Pseudepigrapha. He is also interested in reception studies, mainly in the reception of ancient Jewish and Early Christian texts in European historiography between the 19th and the 20th cent.; in theories for the study of Religion/s; and in methodologies for the analysis of ancient religious groups in the Hellenistic-Roman cities. Prominent among his publications are the monographs "Una donna avvolta nel sole..." (Apoc 12,1). Le raffigurazioni femminili nell'Apocalisse di Giovanni alla luce della letteratura apocalittica giudaica (EMP: Padova, 2008); Visioni del figlio dell'uomo nel Libro delle Parabole e nell'Apocalisse (ANT 19; Morcelliana: Brescia, 2012); the recent Vedere Dio. Le apocalissi giudaiche e protocristiane (sec. IV a.C.-sec. II d.C.) (Frecce 291; Carocci, Roma 2020); and the edited book Beyond Conflicts. Religious and Cultural Cohabitations in Alexandria and Egypt between the 1st and the 6th cent. CE (STAC 103; J.C.B. Mohr Siebeck: Tübingen, 2013). Luca Arcari has also co-edited, with Alessandro Saggioro, the book Sciamanesimo e sciamanesimi. Un problema storiografico (Sapienza sciamanica 3; Bulzoni: Roma, 2012) and the proceedings of the international conference Signs of Cohabitations in the Urban Spaces of the Roman Near East (1st-6th cent. CE), Monographic section in "La parola del passato" 71/1-2, 2016. Luca Arcari is member of scholarly societies and institutions, such as the Enoch Seminar, the European Association for the Study of Religion, the Italian Group for the Study of Origen and the Alexandrian Tradition (GIROTA), the Italian Society for the History of Religions (SISR). Between 2013 and 2016 he was appointed by the Italian Ministry of the University and the Scientific Research as the general coordinator of the FIRB Project - Future in Research 2012 on "The Construction of Space and Time in the Transmission of Collective Identities. Religious Cohabitations and/or Polarizations in Ancient World (1st-6th cent. CE)". Luca Arcari is part of the scientific committee of the Annual Meetings on Christian Origins (Italian Centre for Advanced Studies on Religions [CISSR]) and he is member of the executive board of the journal “Annali di storia dell’esegesi” (EDB). At this time, Luca Arcari is also Senior Fellow in the following international projects: "Jenseits des Kanons: Heterotopien religiöser Autorität im spätantiken Christentum", DFG-Kolleg-Forschungsgruppe (FOR 2770), Universität Regensburg; "Religion and Urbanity: Reciprocal Formations" - Humanities Centre for Advanced Studies/Kolleg-Forschungsgruppe (KFG) (FOR 2779), Max-Weber-Kolleg, Universität Erfurt.`
+  },
+  {
+    id: "filippini",
+    name: `Erica Filippini`,
+    affil: `Università di Bologna`,
+    talk: `Religion and Power in Late Republican Numismatic Language: Priestly Emblems in the Coinage of Mark Antony and Marcus Aemilius Lepidus, 43 BC`,
+    abstract: `The paper investigates the communicative function of Roman coinage in the late Republican period, focusing on the interaction between religious language, political power, and visual representation. Starting from the methodological premises of the Lexicon Iconographicum Numismaticae project, the paper considers coin types as structured messages, in which iconographic and epigraphic elements operate together according to a specific visual and verbal syntax. The case study concerns a group of silver issues struck in 43 BC by Mark Antony and Marcus Aemilius Lepidus in Gallia Transalpina, classified as Crawford, Roman Republican Coinage (RRC) 489/1-3. These denarii and quinarii display, on the two sides of the coin, sets of priestly emblems associated respectively with the augurate and the pontificate: the lituus, jug, and raven for Antony, and the simpulum, aspergillum, axe, and apex for Lepidus. At a first level, these symbols refer to the priestly offices held by the two commanders, Antony as augur and Lepidus as pontifex maximus. Yet their meaning extends beyond the mere indication of religious status. Set against the political instability that followed Caesar's assassination and the civil conflicts of 43 BC, these coin types appear as powerful instruments of self-representation and legitimation. The display of priestly emblems, combined with the names and titles of Antony and Lepidus, constructs a message in which religious authority supports political and military claims. In this context, the coin becomes a medium through which sacred signs are transformed into a language of power, addressed primarily to the troops and embedded in the broader dynamics of late Republican propaganda. By analysing the relationship between image, inscription, and historical context, the paper aims to show how Roman coins could articulate a complex discourse on legitimacy, authority, and divine sanction. The priestly emblems represented on these issues do not simply evoke religious offices; rather, they contribute to the construction of a political message grounded in the inseparable connection between religion and power in late Republican Rome.`,
+    bio: `Erica Filippini è Ricercatrice in Tenure Track e docente di Numismatica presso il Dipartimento di Storia Culture Civiltà dell'Università di Bologna. Membro del gruppo di ricerca del Lexicon Iconographicum Numismaticae, ha indirizzato i suoi interessi di ricerca all'analisi delle iconografie monetali e, più nello specifico, allo studio della moneta come strumento di comunicazione politica e come veicolo di trasmissione di contenuti e linee ideologiche, con riguardo particolare alla documentazione numismatica di epoca romana.`
+  },
+  {
+    id: "bernabe",
+    name: `Alberto Bernabé`,
+    affil: `Universidad Complutense de Madrid`,
+    talk: `The resilient persistence of Orphic terminology over time`,
+    abstract: `Una caratteristica distintiva della terminologia orfica è la sua persistenza nel tempo, il che rivela l'esistenza di un movimento religioso che, pur subendo senza dubbio evoluzioni e modifiche, presenta alcune caratteristiche proprie estremamente evidenti e molto costanti. È il caso, per citare un esempio molto chiaro, di alcuni termini rituali che compaiono con pochissime variazioni nel Papiro di Gurob (III sec. a.C.) e in Clemente di Alessandria (II-III d.C.). Nella relazione verranno presentati alcuni termini come esempi molto rivelatori di questo fenomeno, di cui verrà tracciata una breve storia, segnalandone le coincidenze e le differenze rispetto ai linguaggi religiosi non orfici.`,
+    bio: `Alberto Bernabé è professore emerito di Filologia greca all'Università Complutense. Ha diretto diversi progetti di ricerca sulla religione greca, in particolare sull'orfismo e sul culto di Dioniso. Ha tenuto corsi e conferenze presso istituzioni spagnole, europee e americane ed è autore di oltre 450 pubblicazioni, tra cui si possono citare / Alberto Bernabé is Professor Emeritus of Greek Philology at the Complutense University. He has led various research projects on Greek religion, particularly Orphism and the cult of Dionysus. He has delivered lectures and given courses at institutions in Spain, Europe and the Americas, and is the author of over 450 publications, including Poetae epici Graeci, testimonia et fragmenta Pars I, Leipzig 1987. Pars II Orphicorum fragmenta, (3 vols. München-Leipzig-Berlin-New York 2004-2007), Himnos homéricos, Madrid 2017, Poemas de Orfeo, Madrid, 2026, Orphic Collection, Cambridge (MAS.), Loeb Class Library 2016. with A. Jiménez, Instructions for the Netherworld, The Orphic Gold Tablets, Leiden-Nueva York 2008; with - M. Herrero de Jáuregui - A. I Jiménez San Cristóbal - M. A. Santamaría (eds.), Dioniso y lo dionisíaco en la literatura griega arcaica y clásica, Madrid 2025; with V. Piano, El Papiro de Derveni, comentario filosófico de un poema atribuido a Orfeo. Edición, traducción y comentario, Madrid 2026`
+  },
+  {
+    id: "georgoudi",
+    name: `Stella Georgoudi`,
+    affil: `Ecole Pratique des Hautes Etudes`,
+    talk: `assente`,
+    abstract: `assente`,
+    bio: `assente`
+  },
+  {
+    id: "chiari",
+    name: `Gianmarco Chiari`,
+    affil: `Università di Napoli Federico II Universidad de Cantabria`,
+    talk: `Onomastic Attributes of Mars and the Ideology of Victory in Constantinian Coinage`,
+    abstract: `This paper examines the role of the god Mars in Constantine's imperial propaganda between AD 307 and 310, with particular attention to the coinage issued by the mints of London, Lyon, and Trier. It analyses the onomastic attributes applied to the god—Pater, Propugnator, Victor, and Pacifer—to demonstrate how they articulated Mars' military agency and served to legitimize Constantine's earliest victories, especially his campaign against the Franks in AD 307.`,
+    bio: `Gianmarco Chiari è dottorando in Storia romana presso l’Università di Napoli Federico II e l’Università della Cantabria a Santander. Il suo progetto di ricerca verte sullo studio del favore divino in guerra nella dinastia costantiniana, alla luce della comunicazione politica e della competizione religiosa nell'Impero Romano tardoantico. In precedenza ha studiato Lettere classiche all’Università di Pavia e Filologia classica all’Università di Bologna, dove si è laureato con una tesi sul concetto di «guerra contro Dio» nelle opere di Eusebio di Cesarea. I suoi interessi scientifici riguardano la storia politica e religiosa del IV secolo d.C. e la storiografia tardoantica.`
+  },
+  {
+    id: "ciarini",
+    name: `Alessio Ciarini`,
+    affil: `Università di Siena`,
+    talk: `Folk etymologies and cult tradition: the lost myth of Helike`,
+    abstract: `The paper critically reassesses the hypothesis that the adoption of Mars was a response to the propaganda of Maxentius and proposes an alternative chronological reconstruction, suggesting instead a more complex set of political and communicative motivations. It further identifies three principal audiences for these coin issues: the Tetrarchs, the army—closely associated with the cult of Mars Pater—and the inhabitants of Trier, where the god enjoyed a deeply rooted local cult.`,
+    bio: `Alessio Ciarini si è laureato all'Università di Bologna in "Antropologia, Religioni e Civiltà Orientali" e in "Scienze, Storiche e Orientalistiche". È attualmente dottorando in "Antropologia del Mondo Antico" all'Università di Siena, con una tesi sull'etnogenesi dorica.`
+  },
+  {
+    id: "dozza",
+    name: `Vittoria Dozza`,
+    affil: `Università di Bologna`,
+    talk: `Religious carmina from the Prytaneion of Ephesus: some remarks on SGO 02/03/37 and 02/03/38`,
+    abstract: `In the Greek tradition, the sacred hearth, housed in the prytaneion and central to the cult of Hestia, stood as a symbol of civic life. Although the political prerogatives of the prytanis — whose primary duty was the perpetual tending of Hestia’s fire — were progressively eroded over the centuries, the civic prytaneion retained a prominent role both as an official representative building and, above all, as a religious space. The new prytaneion of Ephesus, constructed in the Augustan period and repeatedly refurbished in the early imperial centuries, was no exception. The building has yielded evidence for the worship of several deities, most notably Hestia and Artemis. Among the many inscriptions left on its walls by prytaneis in commemoration of their tenure, some verse inscriptions are particularly noteworthy, attributable to two prytaneis of the first to second century CE. Claudia Trophime had two carmina in elegiac couplets, hymnic in character, inscribed on the walls (SGO 02/03/37); Tullia, for her part, is responsible for two prayers addressed to the gods of the prytaneion — Hestia, Zeus, and Artemis — one composed in elegiac couplets and hexameters, the other in iambic trimeters (SGO 02/03/38). Following a brief survey of the epigraphic record of the building and of the material, historical, and religious context in which these poems are embedded, the discussion will turn to the poetic texts themselves, with particular attention to three aspects: (1) their formal and lexical character — these carmina adopt the register of hymns and aretalogies and show clear points of contact with distinguished models of Greek religious poetry, including the Homeric Hymns (5.21–32; 24 and 29), the Orphic Hymns (84), and other examples of hymnic verse inscribed on stone, while drawing at the same time on the tradition of the votive epigram for their metres and for their function as a tangible act of homage to the deity; (2) the specific role of these texts within their cultic setting and their possible bearing on the reinterpretation of worship at the prytaneion; (3) the local references that firmly root these verses in the topographical and urban landscape of the Ionian city, as well as in the institutional and religious particularities of the prytany at Ephesus in the imperial period.`,
+    bio: `Vittoria Dozza ha conseguito il dottorato di ricerca in Scienze Umanistiche presso l’Università di Messina (2024). È stata assegnista di ricerca presso l’Università di Bologna all’interno del progetto PRIN2022 “WInGS – Women Intellectuals in Greek Society” e, presso lo stesso Ateneo, ha una borsa di ricerca legata all’aggiornamento della banca dati Année Philologique. I suoi interessi comprendono l’epigramma greco, letterario ed epigrafico, i technopaegnia, e l’educazione femminile nell’antichità.`
+  },
+  {
+    id: "licciardello",
+    name: `Flavia Licciardello`,
+    affil: `Università di Bologna`,
+    talk: `Religious carmina from the Prytaneion of Ephesus: some remarks on SGO 02/03/37 and 02/03/38`,
+    abstract: `In the Greek tradition, the sacred hearth, housed in the prytaneion and central to the cult of Hestia, stood as a symbol of civic life. Although the political prerogatives of the prytanis — whose primary duty was the perpetual tending of Hestia’s fire — were progressively eroded over the centuries, the civic prytaneion retained a prominent role both as an official representative building and, above all, as a religious space. The new prytaneion of Ephesus, constructed in the Augustan period and repeatedly refurbished in the early imperial centuries, was no exception. The building has yielded evidence for the worship of several deities, most notably Hestia and Artemis. Among the many inscriptions left on its walls by prytaneis in commemoration of their tenure, some verse inscriptions are particularly noteworthy, attributable to two prytaneis of the first to second century CE. Claudia Trophime had two carmina in elegiac couplets, hymnic in character, inscribed on the walls (SGO 02/03/37); Tullia, for her part, is responsible for two prayers addressed to the gods of the prytaneion — Hestia, Zeus, and Artemis — one composed in elegiac couplets and hexameters, the other in iambic trimeters (SGO 02/03/38). Following a brief survey of the epigraphic record of the building and of the material, historical, and religious context in which these poems are embedded, the discussion will turn to the poetic texts themselves, with particular attention to three aspects: (1) their formal and lexical character — these carmina adopt the register of hymns and aretalogies and show clear points of contact with distinguished models of Greek religious poetry, including the Homeric Hymns (5.21–32; 24 and 29), the Orphic Hymns (84), and other examples of hymnic verse inscribed on stone, while drawing at the same time on the tradition of the votive epigram for their metres and for their function as a tangible act of homage to the deity; (2) the specific role of these texts within their cultic setting and their possible bearing on the reinterpretation of worship at the prytaneion; (3) the local references that firmly root these verses in the topographical and urban landscape of the Ionian city, as well as in the institutional and religious particularities of the prytany at Ephesus in the imperial period.`,
+    bio: `Flavia Licciardello ha conseguito nel 2018 un dottorato in filologia classica alla Humboldt Universität zu Berlin. Dal 2019 prosegue la sua attività di ricerca presso l’Università di Bologna, dove, dal 2025, coordina le attività del Centro Italiano dell’Année Philologique. I suoi interessi di ricerca comprendono la poesia epigrafica greca, l’epigramma greco e la poesia femminile nell’antichità.`
+  },
+  {
+    id: "mura",
+    name: `Andrea Mura`,
+    affil: `Sapienza Università di Roma`,
+    talk: `Hybridisations and languages in Pherecydes of Syros. Some methodological reflections`,
+    abstract: `Non conoscere il contesto in cui l’opera di Ferecide di Siro dovette circolare ed essere diffusa rappresenta un ostacolo purtroppo non irrilevante. Si giunge così a un bivio, di fronte al quale la scelta di una direzione investigativa precisa non è sempre scontata: la strada del Mythos procederebbe verso l’individuazione di un fulcro rituale, cui la teogonia e cosmogonia offriva uno sfondo (anche) eziologico; d’altra parte, la strada del Logos evidenzia i tratti speculativi dello scritto ferecideo, scorgendovi un punto cardine del fatidico salto che avrebbe permesso ai Greci di approdare alla filosofia. Inutile dire che simili approcci risultano ormai datati, ma anche di fronte alla necessità di restituire Ferecide di Siro a una prospettiva inversa, dal Logos al Mythos, è complesso (forse impossibile) determinare quali fossero le ragioni alla base della redazione di tale discorso teologico (teogonico-cosmogonico). Parlare di un linguaggio di Ferecide di Siro risulta piuttosto fuorviante, dacché il ‘linguaggio’ ferecideo è invero il linguaggio, o i linguaggi, di chi, Ferecide, lo ha voluto tramandare. Di fronte a una tradizione complessa come quella del Sirio (cioè, per lo più indiretta, sine verbis e allusiva), il suo profilo (in quanto autore di VI sec. a.C.) risulta giocoforza ibridato dai differenti linguaggi filosofici ed esegetici degli autori che, dall’Accademia al Peripato, sino agli Stoici e ai (neo)platonismi, l’hanno voluto interpretare. Tre testimonianze, in particolare, hanno in realtà contribuito notevolmente alla vulgata dell’ibridismo ferecideo (cioè come ‘misto’, tra mito e filosofia): Arist. Metaph. 1091b 8-12, Theopomp. Hist. FGrHist 115 F 71, e infine Dam. Pr. 124 bis. Il problema è che tali tracce di Logos che vogliono rendere Ferecide di Siro il perno di una svolta dal mito alla filosofia sono assai equivoche. Senza negare gli effettivi contributi ferecidei, né gli elementi di novità che comunque valsero a sottrarlo (ancorché parzialmente) all’oblio, le citate testimonianze non possono essere prova di una natura speculativa del trattato di Ferecide: Aristotele, nella Metafisica (l.c.), è piuttosto chiaro, e fa qui riferimento all’eternità primordiale di Ζάς, al suo ruolo nella stessa creazione del mondo – o come ποιητής del φᾶρος (P. Bodl. e Clem. Al. Strom. VI 9,3-4), o come Ἔρως-demiurgo (Procl. In Plat. Tim. 32c) – e non alla produzione degli elementi dal seme di Χρόνος. La testimonianza di Teopompo (πρῶτον περὶ φύσεως καὶ θεῶν Ἕλλησι γράψαι) non può essere affatto messa in relazione al passo della Metafisica: per Aristotele, e per il Peripato in generale, un’affermazione del genere sarebbe stata probabilmente inconcepibile, vista la rigida distinzione tra οἱ περὶ θεῶν e οἱ περὶ φύσεως γράψαντες, di cui resta traccia anche nella dossografia (Teofrasto, da un lato, ed Eudemo, dall’altro). Nel caso di Damascio (Pr. 124 bis) la necessità di una Quellenforschung analitica (G.W. Most) risulta ancora più evidente. Si tratta infatti di una testimonianza di almeno terza mano, e, benché sia esplicita la citazione eudemia in Pr. 124 ἡ δὲ παρὰ τῷ περιπατητικῷ Εὐδήμῳ ἀναγεγραμμένη, non è altrettanto evidente quale possa essere la fonte di Eudemo (è bene però mostrare estrema cautela sulla possibilità che tale fonte possa essere Ippia di Elide). Nonostante sia assai verosimile che nel Peripatetico fossero nominati i tre elementi (πῦρ, πνεῦμα, ὕδωρ) – o sarebbe quanto meno complesso (allo stato attuale) dimostrare il contrario – è comunque possibile ammettere un caso di ibridismo; in questo caso, però, di un discorso teogonico originale che, in Damascio, appare adulterato.`,
+    bio: `Laureato in Filologia, letteratura e tradizione classica all'Università di Bologna, sono attualmente dottorando in Storia delle religioni (SAR: Storia, Antropologia, Religioni) presso la Sapienza Università di Roma.`
+  },
+  {
+    id: "polinskaya",
+    name: `Irene Polinskaya`,
+    affil: `King's College London`,
+    talk: `assente`,
+    abstract: `assente`,
+    bio: `assente`
+  },
+  {
+    id: "peels",
+    name: `Saskia Peels`,
+    affil: `Rijksuniversiteit Groningen`,
+    talk: `Trusting gods (or not): pistos and apistos`,
+    abstract: `assente`,
+    bio: `assente`
+  },
+  {
+    id: "tosques",
+    name: `Alfredo Tosques`,
+    affil: `Università di Bologna`,
+    talk: `Self-representation and belonging in religious inscriptions by Italians in Sicily`,
+    abstract: `Sicily’s proximity to the Italian peninsula fostered a lively movement of people and communities long before the Roman conquest. Already well established before the conquest itself, the Italian presence grew more intense once the new province became a lucrative source of profit: hence the image, preserved in the literary sources, of these Italians as rapacious profiteers. The religious inscriptions tell a different story, in which the Italians’ choice of deities (and of their epithets) becomes a way of negotiating belonging and identity between the Romano-Italic world and the local one. I will focus on two case studies: a Latin dedication by the cives Frentani to Hercules Noritanus (an epithet that may point to Nora, in Sardinia), and a Greek list of the prostatai in the cult of Demeter, a central deity in Sicily.`,
+    bio: `Alfredo is completing his doctoral dissertation on the suburbanitas of Roman Sicily, the tension between the island’s provincial status and its proximity to the Italian peninsula, in cotutelle between the Universities of Bologna and Heidelberg. His work reframes the island not as a mere provincial periphery but as a contested space of interaction among Romans, local communities, and Italians overseas. His research interests include epigraphy in both its traditional and digital forms, the Italians in the provinces, and economic history. He collaborates with the I.Sicily and Epigraphic Database Roma projects`
+  },
+  {
+    id: "gillmeister",
+    name: `Andrzej Gillmeister`,
+    affil: `University of Zielona Góra`,
+    talk: `From “Sibyl” to “Sibylline” Books: Prophetic Language, Canon Formation, and Discourses of Authority`,
+    abstract: `This paper explores the transformation of Sibylline prophecy from inspired utterance into authoritative textual corpus, focusing on the passage from the figure of the Sibyl to the institutional status of the Libri Sibyllini. Rather than treating this transition merely as a change in medium—from oral prophecy to written book—the paper interprets it as a process of the formation of a new canon and as the construction of a discourse of religious and cultural authority. In this perspective, the Sibylline Books were not a repository of ancient prophetic wisdom (like oracula sibyllina), but a controlled textual instrument through which Roman elites could define, authorize, and reorganize religious knowledge.`,
+    bio: `Andrzej Gillmeister is a historian of ancient Rome at the University of Zielona Góra. His research focuses on Roman religion, ritual language, the Sibyl and the Sibylline Books, as well as on Latin sacrificial terminology. He is currently working on a lexicon of Latin sacrificial vocabulary.`
+  },
+  {
+    id: "annese",
+    name: `Andrea Annese`,
+    affil: `Università di Bologna`,
+    talk: `Agrapha dogmata. Orality and Doctrinal Transmission in Gnostic Contexts: A Comparison with Pythagoreanism and Platonism`,
+    abstract: `This paper examines the strategies for transmitting doctrines developed in Late Antique Gnostic contexts. Careful consideration of the relationship between orality and writing makes it possible to fully appreciate the meaning and scope of Gnostic "esotericism," while prompting a rereading of the sources and a reassessment of certain historiographical models. A comparison with the evidence concerning Pythagoreanism and Platonism proves particularly fruitful.`,
+    bio: `Andrea Annese è professore associato di Storia del cristianesimo e delle Chiese presso l'Università di Bologna. Le sue ricerche vertono prevalentemente sul cristianesimo delle origini, sui testi di Nag Hammadi, sulle diverse correnti gnostiche e i loro contesti. Tra le sue pubblicazioni: Il Vangelo di Tommaso. Introduzione storico-critica (Roma 2019); I codici di Nag Hammadi. Prima traduzione italiana integrale, a cura di A. Annese, F. Berno, D. Tripaldi (Roma 2024).`
+  },
+  {
+    id: "tripaldi",
+    name: `Daniele Tripaldi`,
+    affil: `Università di Bologna`,
+    talk: `A Matter of Honour… and of Substance: Translating and Reconstructing Religious Imaginaries in Late Antique Egypt in Light of the Apocalypse of Peter (NHC VII,3).`,
+    abstract: `This paper aims to illustrate the complex interplay between Greek, Coptic, and modern languages, as well as between ‘classical’ philology and ‘New Philology’ that forms the basis – or should, as far as possible, form the basis – for any attempt at a diachronic reconstruction of the linguistic, literary, and religious universe of Late Antique Egypt (3rd–5th centuries CE). To this end, two extremely dense and interesting passages from the Coptic Apocalypse of Peter (NHC VII,3 71,3-15 and 71,33-72,2) will be analyzed and translated.`,
+    bio: `Daniele Tripaldi, 2003 MA University of Pisa; 2004 Diploma Scuola Normale Superiore, Pisa; 2007 PhD University of Bologna; 2016-2019 Senior Assistant Professor (RTD-b) at the University of Bologna; since 2019 Associate Professor of “New Testament Exegesis and Ancient Christian Literature” at the Department of Classical Philology and Italian Studies, University of Bologna. My current research focuses on three main areas: John’s Revelation and ancient Jewish visionary texts; heresiology as a source for reconstructing marginalized figure and writings in the early Christ movement; the Nag Hammadi library and Coptic literature.`
+  },
+  {
+    id: "brancaccio",
+    name: `Ida Brancaccio`,
+    affil: `Sant'Anna Institute, Sorrento`,
+    talk: `Speaking with Authority: Female Voice, Moral Discourse, and the Construction of Philosophical Identity in the Pythagorean Epistolary Tradition`,
+    abstract: `The letters and treatises attributed to female Pythagorean philosophers — Theano, Perictione, Melissa — constitute a remarkable and paradoxical discursive phenomenon: texts in which women speak of silence, subordination, and self-restraint, yet in doing so produce philosophical authority, transmit knowledge, and occupy a recognizable enunciative position within the broader Pythagorean tradition. This paper proposes a lexical and pragmatic analysis of the semantic field constructed around key terms — sophrosyne, harmonia, kosmos, sige — examining how this vocabulary functions not merely as a reflection of gender norms, but as a deliberate discursive strategy through which a specifically female philosophical identity is shaped and legitimized. Drawing on the philological tradition and on theories of discursive authority, the paper argues that these texts stage a productive tension between normative constraint and enunciative agency — a tension that renders them unexpectedly resonant with contemporary debates on gender, voice, and the politics of discourse.`,
+    bio: `Ida Brancaccio, PhD, is Chair of Classical Studies and Professor of Philosophy and Religions of Classical Antiquity at the Sant’Anna Institute (Sorrento, Italy). She received her PhD in History from the University of Naples Federico II. Her research focuses on Greek historiography, myth and political culture, gender studies, and the cultural anthropology of the ancient Mediterranean. She has published extensively on Greek myth, Pythagorean traditions, women in antiquity, and the reception of classical thought in modern scholarship. Among her recent publications is the co-edited volume Lo sguardo non convenzionale di Nicole Loraux fra antico e contemporaneo (2024). She also serves as a contributing editor for the International Bibliography of Historical Sciences. Her current research explores the intersections of myth, memory, gender, and civic identity in the ancient Greek world, with particular attention to the role of narratives in the construction of social and political communities.`
+  },
+  {
+    id: "jimenez",
+    name: `Ana Isabel Jiménez San Cristóbal`,
+    affil: `Universidad Complutense de Madrid`,
+    talk: `Acqua, vino e latte nelle formule rituali dei culti misterici: testo e contesto`,
+    abstract: `Lo studio analizza diverse formule rituali in cui l'acqua, il vino e il latte assumono un significato specifico per i fedeli, che devono recitarle in contesti rituali e funebri per dimostrare il proprio status di iniziati.`,
+    bio: `Professor of Greek Philology at Complutense University of Madrid`
+  },
+  {
+    id: "santamaria",
+    name: `Marco Antonio Santamaria`,
+    affil: `Universidad Complutense de Madrid`,
+    talk: `Formulas of congratulations in Greek mystery and wedding rites: from ritual to literature`,
+    abstract: `This presentation examines various formulas known as makarismoi ("Blessed art thou, because..."), used in mystery rites and at weddings to congratulate participants on the new and joyful experience they have undergone during the rite, which will transform their religious or social status by making them initiates or spouses. The similarities between these two types of formula are striking and suggest a mutual influence. Similar expressions such as ‘escaping from evil’ or ‘reaching a safe harbour’ will also be examined; these are recorded by authors across different literary genres and appear to have their origins in mystery cults and weddings.`,
+    bio: `Professor of Greek Philology at the Universidad Complutense de Madrid.`
+  },
 ];
 
 const DAYS = [
   {
     id: "day1",
-    label: "23 Novembre",
-    slots: [
-      { time: "9:00", type: "break", title: "Accoglienza e registrazione" },
-      { time: "9:30", type: "keynote", title: "Saluti istituzionali e apertura dei lavori", speakerIds: ["viscardi"] },
-      { time: "10:15", type: "talk", title: "Titolo della relazione da definire", speakerIds: ["esempio-madrid"], room: "Aula Prodi" },
-      { time: "11:00", type: "break", title: "Pausa caffè" },
-      { time: "11:30", type: "talk", title: "Titolo della relazione da definire", speakerIds: ["esempio-helsinki"], room: "Aula Prodi" },
-      { time: "13:00", type: "break", title: "Pausa pranzo" },
-      { time: "14:30", type: "talk", title: "Titolo della relazione da definire", speakerIds: ["esempio-cracovia"], room: "Aula Prodi" }
+    label: "23 November",
+    sessions: [
+      {
+        label: "Session I",
+        time: "09:00 – 11:25",
+        slots: [
+          { time: "09:00", type: "break", title: "Welcome & registration" },
+          { time: "09:30", type: "break", title: "Institutional greetings" },
+          { time: "09:45", type: "keynote", speakerIds: ["calame"] },
+          { time: "10:30", type: "talk", speakerIds: ["rosamilia"] },
+          { time: "10:50", type: "talk", speakerIds: ["depoli"] },
+          { time: "11:10", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Coffee break", time: "11:25 – 11:40", isBreak: true },
+      {
+        label: "Session II",
+        time: "11:40 – 13:20",
+        slots: [
+          { time: "11:40", type: "talk", speakerIds: ["bigoni"] },
+          { time: "12:00", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
+          { time: "12:30", type: "talk", speakerIds: ["camassa"] },
+          { time: "12:50", type: "talk", speakerIds: ["tommasi"] },
+          { time: "13:10", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
+      {
+        label: "Session III",
+        time: "15:00 – 16:20",
+        slots: [
+          { time: "15:00", type: "talk", speakerIds: ["mari"] },
+          { time: "15:20", type: "talk", speakerIds: ["borgatti"] },
+          { time: "15:40", type: "talk", speakerIds: ["kajava"] },
+          { time: "16:00", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Coffee break", time: "16:20 – 16:40", isBreak: true },
+      {
+        label: "Session IV",
+        time: "16:40 – 18:40",
+        slots: [
+          { time: "16:40", type: "talk", speakerIds: ["cristofori"] },
+          { time: "17:00", type: "talk", speakerIds: ["gordillo"] },
+          { time: "17:20", type: "talk", speakerIds: ["gimenez"] },
+          { time: "17:40", type: "talk", speakerIds: ["arcari"] },
+          { time: "18:00", type: "talk", speakerIds: ["filippini"] },
+          { time: "18:20", type: "break", title: "Final discussion" }
+        ]
+      }
     ]
   },
   {
     id: "day2",
-    label: "24 Novembre",
-    slots: [
-      { time: "9:30", type: "talk", title: "Titolo della relazione da definire", speakerIds: ["viscardi"], room: "Aula Prodi" },
-      { time: "11:00", type: "break", title: "Pausa caffè" },
-      { time: "11:30", type: "talk", title: "Titolo della relazione da definire", speakerIds: ["esempio-madrid", "esempio-helsinki"], room: "Aula Prodi" },
-      { time: "13:00", type: "keynote", title: "Tavola rotonda e conclusioni", speakerIds: ["viscardi", "esempio-cracovia"] }
+    label: "24 November",
+    sessions: [
+      {
+        label: "Session V",
+        time: "10:00 – 11:20",
+        slots: [
+          { time: "10:00", type: "keynote", speakerIds: ["bernabe"] },
+          { time: "10:20", type: "talk", speakerIds: ["georgoudi"] },
+          { time: "10:40", type: "talk", speakerIds: ["chiari"] },
+          { time: "11:00", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Coffee break", time: "11:20 – 11:40", isBreak: true },
+      {
+        label: "Session VI",
+        time: "11:40 – 13:30",
+        slots: [
+          { time: "11:40", type: "talk", speakerIds: ["ciarini"] },
+          { time: "12:00", type: "talk", speakerIds: ["dozza", "licciardello"] },
+          { time: "12:30", type: "talk", speakerIds: ["mura"] },
+          { time: "12:50", type: "talk", speakerIds: ["polinskaya"] },
+          { time: "13:10", type: "break", title: "Final discussion" }
+        ]
+      },
+      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
+      {
+        label: "Session VII",
+        time: "15:00 – 16:20",
+        slots: [
+          { time: "15:00", type: "talk", speakerIds: ["peels"] },
+          { time: "15:20", type: "talk", speakerIds: ["tosques"] },
+          { time: "15:40", type: "talk", speakerIds: ["gillmeister"] },
+          { time: "16:00", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Coffee break", time: "16:20 – 16:40", isBreak: true },
+      {
+        label: "Session VIII",
+        time: "16:40 – 18:40",
+        slots: [
+          { time: "16:40", type: "talk", speakerIds: ["annese"] },
+          { time: "17:00", type: "talk", speakerIds: ["tripaldi"] },
+          { time: "17:20", type: "talk", speakerIds: ["brancaccio"] },
+          { time: "17:40", type: "talk", speakerIds: ["jimenez"] },
+          { time: "18:00", type: "talk", speakerIds: ["santamaria"] },
+          { time: "18:20", type: "break", title: "Final discussion" }
+        ]
+      }
     ]
   }
 ];
 
-const REG_FORM_URL = "https://forms.gle/SOSTITUISCI_CON_IL_TUO_LINK";
+
 /* ========================================================================= */
 
 const speakerById = Object.fromEntries(SPEAKERS.map(s => [s.id, s]));
 
-document.getElementById("info-reg").href = REG_FORM_URL;
-
-// --- Render tabs & schedule ---
+// --- Render tabs & schedule (horizontal sessions) ---
 const tabsEl = document.getElementById("day-tabs");
 const scheduleContainer = document.getElementById("schedule-container");
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
 DAYS.forEach((day, i) => {
   const tab = document.createElement("button");
@@ -344,23 +684,59 @@ DAYS.forEach((day, i) => {
   wrap.className = "schedule" + (i === 0 ? " active" : "");
   wrap.id = day.id;
 
-  day.slots.forEach(slot => {
-    const el = document.createElement("div");
-    el.className = "slot";
-    const speakersHtml = (slot.speakerIds || [])
-      .map(id => `<span class="sp" data-speaker="${id}">${speakerById[id] ? speakerById[id].name : id}</span>`)
-      .join(", ");
-    el.innerHTML = `
-      <div class="slot-time">${slot.time}</div>
-      <div class="slot-body">
-        <span class="slot-type ${slot.type}">${slot.type === "keynote" ? "Sessione plenaria" : slot.type === "break" ? "Pausa" : "Intervento"}</span>
-        <div class="slot-title${slot.speakerIds ? " clickable" : ""}">${slot.title}</div>
+  const row = document.createElement("div");
+  row.className = "session-row";
+
+  day.sessions.forEach(session => {
+    const col = document.createElement("div");
+
+    if (session.isBreak) {
+      col.className = "session-col break-col";
+      col.innerHTML = `
+        <div class="session-name">${session.label}</div>
+        <div class="session-time">${session.time}</div>`;
+      row.appendChild(col);
+      return;
+    }
+
+    col.className = "session-col";
+    const head = document.createElement("div");
+    head.className = "session-head";
+    head.innerHTML = `
+      <div class="session-name">${session.label}</div>
+      <div class="session-time">${session.time}</div>`;
+    col.appendChild(head);
+
+    session.slots.forEach(slot => {
+      const speakers = (slot.speakerIds || []).map(id => speakerById[id]).filter(Boolean);
+      const speakersHtml = speakers
+        .map(sp => `<span class="sp" data-speaker="${sp.id}">${sp.name}</span>`)
+        .join(", ");
+      const title = slot.title || (speakers[0] ? speakers[0].talk : "");
+      const typeLabel = slot.type === "keynote" ? "Plenary" : slot.type === "break" ? "Break" : "Talk";
+
+      // Collect abstracts (dedup) from all speakers of this slot, skip "assente"
+      const abstracts = speakers
+        .map(sp => sp.abstract)
+        .filter(a => a && a.toLowerCase() !== "assente");
+      const uniqueAbstracts = [...new Set(abstracts)];
+      const hasAbstract = uniqueAbstracts.length > 0;
+
+      const el = document.createElement("div");
+      el.className = "slot" + (hasAbstract ? " has-abstract" : "");
+      el.innerHTML = `
+        <div class="slot-time">${slot.time}</div>
+        <span class="slot-type ${slot.type}">${typeLabel}</span>
+        <div class="slot-title">${title}</div>
         ${speakersHtml ? `<div class="slot-speakers">${speakersHtml}</div>` : ""}
-        ${slot.room ? `<div class="slot-room">${slot.room}</div>` : ""}
-      </div>`;
-    wrap.appendChild(el);
+        ${hasAbstract ? `<div class="abstract-pop">${uniqueAbstracts.map(escapeHtml).join("<br><br>")}</div>` : ""}`;
+      col.appendChild(el);
+    });
+
+    row.appendChild(col);
   });
 
+  wrap.appendChild(row);
   scheduleContainer.appendChild(wrap);
 });
 
@@ -390,10 +766,13 @@ function openSpeaker(id) {
   const sp = speakerById[id];
   if (!sp) return;
   modalContent.innerHTML = `
-    <div class="modal-eyebrow">Relatore</div>
+    <div class="modal-eyebrow">Speaker</div>
     <h2>${sp.name}</h2>
     <div class="affil">${sp.affil}</div>
     <div class="talk-title">${sp.talk}</div>
+    <div class="block-label">Abstract</div>
+    <p>${sp.abstract}</p>
+    <div class="block-label">Biography</div>
     <p>${sp.bio}</p>`;
   overlay.classList.add("open");
 }
