@@ -27,8 +27,9 @@
     --tint-4:#f1e8e2;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{
+    overflow-x:hidden;
     background:var(--paper);
     background-image:
       radial-gradient(circle at 12% 8%, rgba(127,168,150,0.16), transparent 38%),
@@ -86,9 +87,12 @@
 
   main > section{padding:0 2.5rem 4.5rem}
   .content{max-width:1000px;margin:0 auto}
+  .content-wide{max-width:1220px;margin:0 auto}
   .section-block{margin-bottom:1rem}
   .section-title{font-size:26px;font-weight:600;position:relative;display:inline-block;padding-bottom:0.5rem;margin-bottom:0.6rem}
   .section-title::after{content:"";position:absolute;left:0;bottom:0;width:40px;height:3px;background:var(--green)}
+  .section-title-hero{font-size:clamp(28px,3.6vw,40px)}
+  .section-title-hero::after{left:50%;transform:translateX(-50%)}
   .section-sub{color:var(--muted);font-style:italic;margin-bottom:2.2rem;max-width:640px}
 
   /* Info strip */
@@ -100,44 +104,61 @@
   .info-card .value a:hover{color:var(--ink)}
 
   /* Day tabs */
-  .day-tabs{display:flex;gap:0.8rem;justify-content:center;margin-bottom:2.2rem;flex-wrap:wrap}
-  .day-tab{background:var(--paper-soft);border:1px solid var(--border);border-radius:999px;padding:0.7rem 1.6rem;font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.08em;cursor:pointer;color:var(--muted);transition:all .2s}
+  .day-tabs{display:flex;gap:0.9rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+  .day-tab{background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:0.85rem 2.1rem;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;cursor:pointer;color:var(--muted);transition:all .2s;box-shadow:0 4px 12px rgba(30,58,53,0.05)}
   .day-tab:hover{color:var(--ink);border-color:var(--green-deep)}
-  .day-tab.active{background:var(--green-deep);color:var(--paper);border-color:var(--green-deep)}
+  .day-tab.active{background:var(--green-deep);color:var(--paper);border-color:var(--green-deep);box-shadow:0 8px 20px rgba(79,125,108,0.3)}
 
-  /* Horizontal session layout */
+  /* Programme panel — the visual focus of the page */
+  .programme-panel{
+    background:rgba(255,255,255,0.55);
+    backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.7);
+    border-radius:28px;
+    padding:2.2rem 2rem 1.4rem;
+    box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, 0 24px 60px rgba(30,58,53,0.12);
+  }
+
+  /* Vertical, full-width session list ("calendar" reading top to bottom) */
   .schedule{display:none}
   .schedule.active{display:block}
-  .session-row{display:flex;gap:1.4rem;align-items:flex-start;overflow-x:auto;padding:0.5rem 0 1.8rem;scroll-snap-type:x proximity}
-  .session-row::-webkit-scrollbar{height:8px}
-  .session-row::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
-  .session-col{flex:0 0 260px;scroll-snap-align:start;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border:1px solid var(--border);border-radius:16px;padding:1.2rem 1.1rem;display:flex;flex-direction:column;gap:0.2rem}
-  .session-head{margin-bottom:0.6rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
-  .session-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.06em;color:var(--ink)}
-  .session-time{font-size:13px;color:var(--muted);font-style:italic}
-  .session-col.break-col{flex:0 0 150px;align-items:center;justify-content:center;text-align:center;background:var(--paper-soft);border-style:dashed}
-  .break-col .session-name{color:var(--muted)}
-  .break-col .session-time{margin-top:0.2rem}
 
-  .slot{padding:0.7rem 0;border-bottom:1px solid var(--border);position:relative}
-  .slot:last-child{border-bottom:none}
-  .slot-time{font-family:'Cinzel',serif;font-size:11px;color:var(--green-deep);letter-spacing:0.03em;margin-bottom:0.2rem}
-  .slot-type{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin-bottom:0.15rem;display:inline-block}
-  .slot-type.talk{color:var(--green-deep)}
-  .slot-type.break{color:#b08a5a}
-  .slot-type.keynote{color:#a8586b}
-  .slot-title{font-size:16px;margin-bottom:0.2rem;line-height:1.3}
-  .slot.has-abstract{cursor:pointer}
-  .slot.has-abstract .slot-title{text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px;transition:text-decoration-color .2s}
-  .slot.has-abstract:hover .slot-title{text-decoration-color:var(--green-deep)}
-  .slot-speakers{color:var(--muted);font-size:13px}
-  .slot-speakers .sp{cursor:pointer;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:2px}
-  .slot-speakers .sp:hover{color:var(--green-deep);text-decoration-color:var(--green-deep)}
+  .session-block{margin-bottom:1.3rem;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:var(--paper);box-shadow:0 10px 26px rgba(30,58,53,0.06)}
+  .session-block-head{background:var(--green-deep);color:var(--paper);padding:1.1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;user-select:none}
+  .session-block-head .sname{font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.08em;font-weight:600}
+  .session-block-head .stime{font-size:13.5px;color:rgba(246,243,236,0.85);font-style:italic;margin-top:0.15rem}
+  .session-chevron{font-size:16px;transition:transform .2s ease;flex-shrink:0}
+  .session-block.collapsed .session-chevron{transform:rotate(-90deg)}
+  .session-block-body{max-height:6000px;overflow:hidden;transition:max-height .35s ease}
+  .session-block.collapsed .session-block-body{max-height:0}
 
-  /* Abstract hover popover */
-  .abstract-pop{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(6px);width:300px;max-width:80vw;background:var(--ink-deep);color:var(--paper);font-size:13px;line-height:1.5;border-radius:12px;padding:1rem 1.1rem;box-shadow:0 14px 34px rgba(18,33,30,0.35);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease, transform .18s ease;z-index:30}
-  .abstract-pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--ink-deep)}
-  .slot.has-abstract:hover .abstract-pop{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .talk-row{display:grid;grid-template-columns:120px 1.5fr 1fr;gap:1.6rem;padding:1.3rem 1.6rem;border-top:1px solid var(--border);align-items:start}
+  .talk-row:first-child{border-top:none}
+  .talk-row.clickable{cursor:pointer;transition:background .15s ease}
+  .talk-row.clickable:hover{background:var(--paper-soft)}
+  .talk-time{font-family:'Cinzel',serif;font-size:22px;color:var(--green-deep);font-weight:600;letter-spacing:0.01em}
+  .talk-type{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.13em;color:var(--muted);text-transform:uppercase;margin-bottom:0.3rem;display:inline-block}
+  .talk-type.talk{color:var(--green-deep)}
+  .talk-type.break{color:#b08a5a}
+  .talk-type.keynote{color:#a8586b}
+  .talk-title{font-size:18.5px;line-height:1.35;margin-bottom:0.4rem}
+  .talk-row.clickable .talk-title{text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px;transition:text-decoration-color .2s}
+  .talk-row.clickable:hover .talk-title{text-decoration-color:var(--green-deep)}
+  .talk-speakers{color:var(--green-deep);font-size:17px;font-weight:600}
+  .talk-speakers .sp{cursor:pointer}
+  .talk-speakers .sp:hover{text-decoration:underline}
+  .talk-abstract{color:var(--muted);font-size:14.5px;line-height:1.55;font-style:italic;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .talk-abstract.empty{opacity:0}
+
+  .break-row{padding:0.9rem 1.6rem;text-align:center;background:var(--paper-soft);border:1px dashed var(--border);border-radius:14px;color:var(--muted);margin-bottom:1.3rem}
+  .break-row .blabel{font-family:'Cinzel',serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase}
+  .break-row .btime{font-size:13px;font-style:italic;margin-top:0.1rem}
+
+  @media (max-width:800px){
+    .talk-row{grid-template-columns:1fr;gap:0.4rem}
+    .talk-time{font-size:19px}
+    .talk-abstract{-webkit-line-clamp:3}
+  }
 
   /* Speakers grid — uniform cards */
   .speaker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.6rem;max-width:1000px;margin:0 auto}
@@ -150,14 +171,17 @@
   .speaker-talk{color:var(--muted);font-size:14px;font-style:italic}
 
   @media (max-width:700px){
-    .session-row{gap:1rem}
-    .session-col{flex-basis:230px}
+    .programme-panel{padding:1.4rem 0.9rem 1rem;border-radius:20px}
   }
 
   /* Modal */
-  .modal-overlay{position:fixed;inset:0;background:rgba(18,33,30,0.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:1.5rem}
-  .modal-overlay.open{display:flex}
-  .modal{background:var(--paper);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border)}
+  .modal-overlay{position:fixed;inset:0;background:rgba(18,33,30,0.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.5rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease, visibility 0s linear .22s}
+  .modal-overlay.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease, visibility 0s linear 0s}
+  .modal{background:var(--paper);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border);transform:translateY(18px) scale(0.97);opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .22s ease}
+  .modal-overlay.open .modal{transform:translateY(0) scale(1);opacity:1}
+  @media (prefers-reduced-motion: reduce){
+    .modal-overlay,.modal{transition:none}
+  }
   .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;line-height:1;font-family:'Cormorant Garamond',serif}
   .modal-close:hover{color:var(--ink)}
   .modal-eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--green-deep);margin-bottom:0.6rem}
@@ -182,8 +206,12 @@
     .hero-dark{padding:3.5rem 1.3rem 2.8rem}
     .hero-dark h1{font-size:26px}
     main > section{padding:0 1.3rem 3rem}
-    .slot{grid-template-columns:1fr;gap:0.3rem}
-    .slot-time{padding-top:0}
+    .day-tab{padding:0.8rem 1.5rem;flex:1 1 auto;text-align:center}
+    .session-block-head{padding:1rem 1.1rem}
+    .talk-row{padding:1.1rem}
+    .modal{padding:1.6rem 1.3rem}
+    .modal-close{padding:0.4rem;top:0.6rem;right:0.6rem}
+    .speaker-card{padding:1.3rem}
   }
 </style>
 </head>
@@ -214,6 +242,20 @@
   </div>
 </div>
 
+<section id="programme">
+  <div class="content content-wide">
+    <div class="section-block reveal" style="text-align:center">
+      <div class="section-title section-title-hero">Full programme</div>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto">Select a day to browse the sessions. Click on a talk for full details.</p>
+    </div>
+
+    <div class="day-tabs reveal" id="day-tabs"></div>
+    <div class="programme-panel reveal">
+      <div id="schedule-container"></div>
+    </div>
+  </div>
+</section>
+
 <section id="info">
   <div class="content">
     <div class="info-strip reveal">
@@ -230,18 +272,6 @@
         <div class="value" id="info-lang">Italian · English · French</div>
       </div>
     </div>
-  </div>
-</section>
-
-<section id="programme">
-  <div class="content">
-    <div class="section-block reveal">
-      <div class="section-title">Programme</div>
-      <p class="section-sub">Select a day to view the sessions. Click on a talk or a speaker's name for details.</p>
-    </div>
-
-    <div class="day-tabs reveal" id="day-tabs"></div>
-    <div id="schedule-container"></div>
   </div>
 </section>
 
@@ -557,12 +587,12 @@ const DAYS = [
         label: "Session I",
         time: "09:00 – 11:25",
         slots: [
-          { time: "09:00", type: "break", title: "Welcome & registration" },
-          { time: "09:30", type: "break", title: "Institutional greetings" },
-          { time: "09:45", type: "keynote", speakerIds: ["calame"] },
-          { time: "10:30", type: "talk", speakerIds: ["rosamilia"] },
-          { time: "10:50", type: "talk", speakerIds: ["depoli"] },
-          { time: "11:10", type: "break", title: "Discussion" }
+          { time: "09:00 – 09:30", type: "break", title: "Welcome & registration" },
+          { time: "09:30 – 09:45", type: "break", title: "Institutional greetings" },
+          { time: "09:45 – 10:30", type: "keynote", speakerIds: ["calame"] },
+          { time: "10:30 – 10:50", type: "talk", speakerIds: ["rosamilia"] },
+          { time: "10:50 – 11:10", type: "talk", speakerIds: ["depoli"] },
+          { time: "11:10 – 11:25", type: "break", title: "Discussion" }
         ]
       },
       { label: "Coffee break", time: "11:25 – 11:40", isBreak: true },
@@ -570,11 +600,11 @@ const DAYS = [
         label: "Session II",
         time: "11:40 – 13:20",
         slots: [
-          { time: "11:40", type: "talk", speakerIds: ["bigoni"] },
-          { time: "12:00", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
-          { time: "12:30", type: "talk", speakerIds: ["camassa"] },
-          { time: "12:50", type: "talk", speakerIds: ["tommasi"] },
-          { time: "13:10", type: "break", title: "Discussion" }
+          { time: "11:40 – 12:00", type: "talk", speakerIds: ["bigoni"] },
+          { time: "12:00 – 12:30", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
+          { time: "12:30 – 12:50", type: "talk", speakerIds: ["camassa"] },
+          { time: "12:50 – 13:10", type: "talk", speakerIds: ["tommasi"] },
+          { time: "13:10 – 13:20", type: "break", title: "Discussion" }
         ]
       },
       { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
@@ -582,10 +612,10 @@ const DAYS = [
         label: "Session III",
         time: "15:00 – 16:20",
         slots: [
-          { time: "15:00", type: "talk", speakerIds: ["mari"] },
-          { time: "15:20", type: "talk", speakerIds: ["borgatti"] },
-          { time: "15:40", type: "talk", speakerIds: ["kajava"] },
-          { time: "16:00", type: "break", title: "Discussion" }
+          { time: "15:00 – 15:20", type: "talk", speakerIds: ["mari"] },
+          { time: "15:20 – 15:40", type: "talk", speakerIds: ["borgatti"] },
+          { time: "15:40 – 16:00", type: "talk", speakerIds: ["kajava"] },
+          { time: "16:00 – 16:20", type: "break", title: "Discussion" }
         ]
       },
       { label: "Coffee break", time: "16:20 – 16:40", isBreak: true },
@@ -593,12 +623,12 @@ const DAYS = [
         label: "Session IV",
         time: "16:40 – 18:40",
         slots: [
-          { time: "16:40", type: "talk", speakerIds: ["cristofori"] },
-          { time: "17:00", type: "talk", speakerIds: ["gordillo"] },
-          { time: "17:20", type: "talk", speakerIds: ["gimenez"] },
-          { time: "17:40", type: "talk", speakerIds: ["arcari"] },
-          { time: "18:00", type: "talk", speakerIds: ["filippini"] },
-          { time: "18:20", type: "break", title: "Final discussion" }
+          { time: "16:40 – 17:00", type: "talk", speakerIds: ["cristofori"] },
+          { time: "17:00 – 17:20", type: "talk", speakerIds: ["gordillo"] },
+          { time: "17:20 – 17:40", type: "talk", speakerIds: ["gimenez"] },
+          { time: "17:40 – 18:00", type: "talk", speakerIds: ["arcari"] },
+          { time: "18:00 – 18:20", type: "talk", speakerIds: ["filippini"] },
+          { time: "18:20 – 18:40", type: "break", title: "Final discussion" }
         ]
       }
     ]
@@ -611,10 +641,10 @@ const DAYS = [
         label: "Session V",
         time: "10:00 – 11:20",
         slots: [
-          { time: "10:00", type: "keynote", speakerIds: ["bernabe"] },
-          { time: "10:20", type: "talk", speakerIds: ["georgoudi"] },
-          { time: "10:40", type: "talk", speakerIds: ["chiari"] },
-          { time: "11:00", type: "break", title: "Discussion" }
+          { time: "10:00 – 10:20", type: "keynote", speakerIds: ["bernabe"] },
+          { time: "10:20 – 10:40", type: "talk", speakerIds: ["georgoudi"] },
+          { time: "10:40 – 11:00", type: "talk", speakerIds: ["chiari"] },
+          { time: "11:00 – 11:20", type: "break", title: "Discussion" }
         ]
       },
       { label: "Coffee break", time: "11:20 – 11:40", isBreak: true },
@@ -622,11 +652,11 @@ const DAYS = [
         label: "Session VI",
         time: "11:40 – 13:30",
         slots: [
-          { time: "11:40", type: "talk", speakerIds: ["ciarini"] },
-          { time: "12:00", type: "talk", speakerIds: ["dozza", "licciardello"] },
-          { time: "12:30", type: "talk", speakerIds: ["mura"] },
-          { time: "12:50", type: "talk", speakerIds: ["polinskaya"] },
-          { time: "13:10", type: "break", title: "Final discussion" }
+          { time: "11:40 – 12:00", type: "talk", speakerIds: ["ciarini"] },
+          { time: "12:00 – 12:30", type: "talk", speakerIds: ["dozza", "licciardello"] },
+          { time: "12:30 – 12:50", type: "talk", speakerIds: ["mura"] },
+          { time: "12:50 – 13:10", type: "talk", speakerIds: ["polinskaya"] },
+          { time: "13:10 – 13:30", type: "break", title: "Final discussion" }
         ]
       },
       { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
@@ -634,10 +664,10 @@ const DAYS = [
         label: "Session VII",
         time: "15:00 – 16:20",
         slots: [
-          { time: "15:00", type: "talk", speakerIds: ["peels"] },
-          { time: "15:20", type: "talk", speakerIds: ["tosques"] },
-          { time: "15:40", type: "talk", speakerIds: ["gillmeister"] },
-          { time: "16:00", type: "break", title: "Discussion" }
+          { time: "15:00 – 15:20", type: "talk", speakerIds: ["peels"] },
+          { time: "15:20 – 15:40", type: "talk", speakerIds: ["tosques"] },
+          { time: "15:40 – 16:00", type: "talk", speakerIds: ["gillmeister"] },
+          { time: "16:00 – 16:20", type: "break", title: "Discussion" }
         ]
       },
       { label: "Coffee break", time: "16:20 – 16:40", isBreak: true },
@@ -645,12 +675,12 @@ const DAYS = [
         label: "Session VIII",
         time: "16:40 – 18:40",
         slots: [
-          { time: "16:40", type: "talk", speakerIds: ["annese"] },
-          { time: "17:00", type: "talk", speakerIds: ["tripaldi"] },
-          { time: "17:20", type: "talk", speakerIds: ["brancaccio"] },
-          { time: "17:40", type: "talk", speakerIds: ["jimenez"] },
-          { time: "18:00", type: "talk", speakerIds: ["santamaria"] },
-          { time: "18:20", type: "break", title: "Final discussion" }
+          { time: "16:40 – 17:00", type: "talk", speakerIds: ["annese"] },
+          { time: "17:00 – 17:20", type: "talk", speakerIds: ["tripaldi"] },
+          { time: "17:20 – 17:40", type: "talk", speakerIds: ["brancaccio"] },
+          { time: "17:40 – 18:00", type: "talk", speakerIds: ["jimenez"] },
+          { time: "18:00 – 18:20", type: "talk", speakerIds: ["santamaria"] },
+          { time: "18:20 – 18:40", type: "break", title: "Final discussion" }
         ]
       }
     ]
@@ -684,28 +714,31 @@ DAYS.forEach((day, i) => {
   wrap.className = "schedule" + (i === 0 ? " active" : "");
   wrap.id = day.id;
 
-  const row = document.createElement("div");
-  row.className = "session-row";
-
   day.sessions.forEach(session => {
-    const col = document.createElement("div");
-
     if (session.isBreak) {
-      col.className = "session-col break-col";
-      col.innerHTML = `
-        <div class="session-name">${session.label}</div>
-        <div class="session-time">${session.time}</div>`;
-      row.appendChild(col);
+      const br = document.createElement("div");
+      br.className = "break-row";
+      br.innerHTML = `<div class="blabel">${session.label}</div><div class="btime">${session.time}</div>`;
+      wrap.appendChild(br);
       return;
     }
 
-    col.className = "session-col";
+    const block = document.createElement("div");
+    block.className = "session-block";
+
     const head = document.createElement("div");
-    head.className = "session-head";
+    head.className = "session-block-head";
     head.innerHTML = `
-      <div class="session-name">${session.label}</div>
-      <div class="session-time">${session.time}</div>`;
-    col.appendChild(head);
+      <div>
+        <div class="sname">${session.label}</div>
+        <div class="stime">${session.time}</div>
+      </div>
+      <span class="session-chevron">&#9660;</span>`;
+    head.addEventListener("click", () => block.classList.toggle("collapsed"));
+    block.appendChild(head);
+
+    const body = document.createElement("div");
+    body.className = "session-block-body";
 
     session.slots.forEach(slot => {
       const speakers = (slot.speakerIds || []).map(id => speakerById[id]).filter(Boolean);
@@ -715,28 +748,28 @@ DAYS.forEach((day, i) => {
       const title = slot.title || (speakers[0] ? speakers[0].talk : "");
       const typeLabel = slot.type === "keynote" ? "Plenary" : slot.type === "break" ? "Break" : "Talk";
 
-      // Collect abstracts (dedup) from all speakers of this slot, skip "assente"
-      const abstracts = speakers
-        .map(sp => sp.abstract)
-        .filter(a => a && a.toLowerCase() !== "assente");
-      const uniqueAbstracts = [...new Set(abstracts)];
-      const hasAbstract = uniqueAbstracts.length > 0;
+      // First non-"assente" abstract among this slot's speakers, for the inline excerpt
+      const abstract = speakers.map(sp => sp.abstract).find(a => a && a.toLowerCase() !== "assente");
+      const clickable = speakers.length > 0;
 
-      const el = document.createElement("div");
-      el.className = "slot" + (hasAbstract ? " has-abstract" : "");
-      el.innerHTML = `
-        <div class="slot-time">${slot.time}</div>
-        <span class="slot-type ${slot.type}">${typeLabel}</span>
-        <div class="slot-title">${title}</div>
-        ${speakersHtml ? `<div class="slot-speakers">${speakersHtml}</div>` : ""}
-        ${hasAbstract ? `<div class="abstract-pop">${uniqueAbstracts.map(escapeHtml).join("<br><br>")}</div>` : ""}`;
-      col.appendChild(el);
+      const row = document.createElement("div");
+      row.className = "talk-row" + (clickable ? " clickable" : "");
+      if (clickable) row.dataset.speaker = speakers[0].id;
+      row.innerHTML = `
+        <div class="talk-time">${slot.time}</div>
+        <div>
+          <span class="talk-type ${slot.type}">${typeLabel}</span>
+          <div class="talk-title">${title}</div>
+          ${speakersHtml ? `<div class="talk-speakers">${speakersHtml}</div>` : ""}
+        </div>
+        <div class="talk-abstract${abstract ? "" : " empty"}">${abstract ? escapeHtml(abstract) : ""}</div>`;
+      body.appendChild(row);
     });
 
-    row.appendChild(col);
+    block.appendChild(body);
+    wrap.appendChild(block);
   });
 
-  wrap.appendChild(row);
   scheduleContainer.appendChild(wrap);
 });
 
@@ -744,6 +777,12 @@ function showDay(id) {
   document.querySelectorAll(".day-tab").forEach(t => t.classList.toggle("active", t.dataset.target === id));
   document.querySelectorAll(".schedule").forEach(s => s.classList.toggle("active", s.id === id));
 }
+
+// --- Click on a talk row opens the speaker modal ---
+document.addEventListener("click", (e) => {
+  const row = e.target.closest(".talk-row.clickable");
+  if (row) openSpeaker(row.dataset.speaker);
+});
 
 // --- Render speaker grid ---
 const grid = document.getElementById("speaker-grid");
