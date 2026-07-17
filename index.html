@@ -14,18 +14,18 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   :root{
-    --paper:#f6f3ec;
-    --paper-soft:#eeebe2;
+    --paper:#faf8f3;
+    --paper-soft:#f2efe6;
     --ink:#1e3a35;
     --ink-deep:#12211e;
     --green:#7fa896;
     --green-deep:#4f7d6c;
-    --border:#ddd7c8;
-    --muted:#6e6a5e;
-    --tint-1:#e9f1ec;
-    --tint-2:#f2ecdd;
-    --tint-3:#e6edf1;
-    --tint-4:#f1e8e2;
+    --border:#e4ddcd;
+    --muted:#736f62;
+    --tint-1:#eef3ef;
+    --tint-2:#f5f1e5;
+    --tint-3:#eef2f4;
+    --tint-4:#f5efe7;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;overflow-x:hidden}
@@ -33,7 +33,7 @@
   body::before{
     content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    opacity:0.05;mix-blend-mode:multiply;
+    opacity:0.065;mix-blend-mode:multiply;
   }
   body{
     overflow-x:hidden;
@@ -175,7 +175,25 @@
     .talk-time{font-size:12px}
     .talk-title{font-size:16.5px;margin-bottom:0.2rem}
     .talk-speakers{font-size:15px}
-    .talk-abstract{font-size:13px;-webkit-line-clamp:2;line-height:1.45}
+    .talk-abstract{
+      font-size:13px;line-height:1.45;-webkit-line-clamp:unset;
+      max-height:0;opacity:0;overflow:hidden;
+      border-left:none !important;padding-left:0 !important;padding-top:0;
+      transition:max-height .32s ease, opacity .25s ease, padding-top .32s ease;
+    }
+    .talk-row[data-has-abstract="1"]::after{
+      content:"Tap to preview abstract";
+      display:block;margin-top:0.35rem;font-family:'Fraunces',serif;
+      font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-deep);opacity:0.75;
+    }
+    .talk-row.abstract-open[data-has-abstract="1"]::after{display:none}
+    .talk-row.abstract-open .talk-abstract{max-height:400px;opacity:1;padding-top:0.7rem}
+    .talk-abstract-link{display:none}
+    .talk-row.abstract-open .talk-abstract-link{
+      display:inline-block;margin-top:0.6rem;font-family:'Fraunces',serif;font-size:10.5px;
+      letter-spacing:0.08em;text-transform:uppercase;color:var(--green-deep);cursor:pointer;
+    }
+    .talk-abstract.empty{display:none}
   }
 
 
@@ -802,6 +820,7 @@ DAYS.forEach((day, i) => {
       const row = document.createElement("div");
       row.className = "talk-row" + (clickable ? " clickable" : "");
       if (clickable) row.dataset.speaker = speakers[0].id;
+      if (abstract) row.dataset.hasAbstract = "1";
       row.innerHTML = `
         <div class="talk-main">
           <div class="talk-meta">
@@ -811,7 +830,9 @@ DAYS.forEach((day, i) => {
           <div class="talk-title">${title}</div>
           ${speakersHtml ? `<div class="talk-speakers">${speakersHtml}</div>` : ""}
         </div>
-        <div class="talk-abstract${abstract ? "" : " empty"}">${abstract ? escapeHtml(abstract) : ""}</div>`;
+        <div class="talk-abstract${abstract ? "" : " empty"}">${abstract ? escapeHtml(abstract) : ""}
+          ${abstract ? `<span class="talk-abstract-link" data-speaker="${speakers[0].id}">View speaker details →</span>` : ""}
+        </div>`;
       body.appendChild(row);
     });
 
@@ -827,10 +848,23 @@ function showDay(id) {
   document.querySelectorAll(".schedule").forEach(s => s.classList.toggle("active", s.id === id));
 }
 
-// --- Click on a talk row opens the speaker modal ---
+// --- Click on a talk row ---
+// On mobile, the abstract is collapsed to save space: the first tap reveals it,
+// a second tap (or the "View speaker details" link) opens the full modal.
+// On desktop the abstract is already visible inline, so a single click opens the modal.
 document.addEventListener("click", (e) => {
+  const link = e.target.closest(".talk-abstract-link");
+  if (link) { openSpeaker(link.dataset.speaker); return; }
+
   const row = e.target.closest(".talk-row.clickable");
-  if (row) openSpeaker(row.dataset.speaker);
+  if (!row) return;
+
+  const isMobile = window.matchMedia("(max-width:700px)").matches;
+  if (isMobile && row.dataset.hasAbstract === "1" && !row.classList.contains("abstract-open")) {
+    row.classList.add("abstract-open");
+    return;
+  }
+  openSpeaker(row.dataset.speaker);
 });
 
 // --- Render speaker list, alphabetical by surname ---
