@@ -598,8 +598,8 @@ const SPEAKERS = [
     id: "borgatti",
     name: `Caterina Borgatti`,
     affil: `Università di Torino`,
-    en: { talk: `Communication and Oracular Deities: Shared Formulas and Practices between Asclepius and Sarapis in the Hellenistic Period`, abstract: `The study of Isiac cults on Delos reveals two expressions particularly associated with these contexts: kata prostagma and therapeia. These elements are also attested in relation to the cults of Syrian deities on the island. The same features subsequently appear in connection with Isiac cults throughout the Greek world, where they are also associated with other cults, particularly that of Asclepius. Can the presence of these textual elements in the evidence for Isiac cults and the cult of Asclepius point to a shared cultic language between the two religious contexts? Could such a possible linguistic commonality imply similar ritual practices? The oracular dimension, fundamental to both cults, plays a central role in the use of the formula kata prostagma, but does the use of the same formula also imply a comparable cultic practice? The same question may be raised regarding the therapeutai, who appear as individual worshippers in some sanctuaries and as organized groups (koina) in others, yet are consistently united by the same designation, which, although not exclusive, is closely associated with both Isiac cults and the cult of Asclepius. Investigating these aspects may contribute to a broader reflection on the relationship between language, cult, and ritual, a relationship that may take forms of causality or reciprocity depending on the specific contexts.`, bio: `(to be received)` },
-    it: { talk: `Comunicazione e divinità oracolari: formule e pratiche condivise tra Asclepio e Serapide nell'epoca ellenistica`, abstract: `Lo studio dei culti isiaci a Delo mette in luce due espressioni particolarmente legate a questi contesti: kata prostagma e therapeia. Questi elementi sono attestati anche in relazione ai culti delle divinità siriache sull'isola. Le stesse caratteristiche compaiono in seguito in relazione ai culti isiaci in tutto il mondo greco, dove sono associate anche ad altri culti, in particolare quello di Asclepio. La presenza di questi elementi testuali nelle attestazioni dei culti isiaci e del culto di Asclepio può indicare un linguaggio cultuale condiviso tra i due contesti religiosi? Una simile eventuale comunanza linguistica potrebbe implicare pratiche rituali analoghe? La dimensione oracolare, fondamentale per entrambi i culti, svolge un ruolo centrale nell'uso della formula kata prostagma, ma l'uso della stessa formula implica anche una pratica cultuale comparabile? La stessa domanda può porsi riguardo ai therapeutai, che compaiono come fedeli individuali in alcuni santuari e come gruppi organizzati (koina) in altri, ma sono costantemente accomunati dalla medesima definizione, che, pur non essendo esclusiva, è strettamente legata sia ai culti isiaci sia al culto di Asclepio. Indagare questi aspetti può contribuire a una riflessione più ampia sul rapporto tra linguaggio, culto e rito, un rapporto che può assumere forme di causalità o reciprocità a seconda dei contesti specifici.`, bio: `(in fase di ricezione)` }
+    en: { talk: `Communication and Oracular Deities: Shared Formulas and Practices between Asclepius and Sarapis in the Hellenistic Period`, abstract: `The study of Isiac cults on Delos reveals two expressions particularly associated with these contexts: kata prostagma and therapeia. These elements are also attested in relation to the cults of Syrian deities on the island. The same features subsequently appear in connection with Isiac cults throughout the Greek world, where they are also associated with other cults, particularly that of Asclepius. Can the presence of these textual elements in the evidence for Isiac cults and the cult of Asclepius point to a shared cultic language between the two religious contexts? Could such a possible linguistic commonality imply similar ritual practices? The oracular dimension, fundamental to both cults, plays a central role in the use of the formula kata prostagma, but does the use of the same formula also imply a comparable cultic practice? The same question may be raised regarding the therapeutai, who appear as individual worshippers in some sanctuaries and as organized groups (koina) in others, yet are consistently united by the same designation, which, although not exclusive, is closely associated with both Isiac cults and the cult of Asclepius. Investigating these aspects may contribute to a broader reflection on the relationship between language, cult, and ritual, a relationship that may take forms of causality or reciprocity depending on the specific contexts.`, bio: `I graduated at the University of Bologna (Alma Mater Studiorum). During my master's I studied History of Ancient Religions, with a thesis on Dionysiac religion in Ptolemaic Egypt. I am now in my second year of the PhD programme and my research project focuses on the diffusion and establishment of Isiac cults in Hellenistic Rhodes and Delos, beginning with the prosopographical analysis of the worshippers and the study of cultic practice. I am part of the LARES project, helping with the XML digitisation of the lemmatic records.` },
+    it: { talk: `Comunicazione e divinità oracolari: formule e pratiche condivise tra Asclepio e Serapide nell'epoca ellenistica`, abstract: `Lo studio dei culti isiaci a Delo mette in luce due espressioni particolarmente legate a questi contesti: kata prostagma e therapeia. Questi elementi sono attestati anche in relazione ai culti delle divinità siriache sull'isola. Le stesse caratteristiche compaiono in seguito in relazione ai culti isiaci in tutto il mondo greco, dove sono associate anche ad altri culti, in particolare quello di Asclepio. La presenza di questi elementi testuali nelle attestazioni dei culti isiaci e del culto di Asclepio può indicare un linguaggio cultuale condiviso tra i due contesti religiosi? Una simile eventuale comunanza linguistica potrebbe implicare pratiche rituali analoghe? La dimensione oracolare, fondamentale per entrambi i culti, svolge un ruolo centrale nell'uso della formula kata prostagma, ma l'uso della stessa formula implica anche una pratica cultuale comparabile? La stessa domanda può porsi riguardo ai therapeutai, che compaiono come fedeli individuali in alcuni santuari e come gruppi organizzati (koina) in altri, ma sono costantemente accomunati dalla medesima definizione, che, pur non essendo esclusiva, è strettamente legata sia ai culti isiaci sia al culto di Asclepio. Indagare questi aspetti può contribuire a una riflessione più ampia sul rapporto tra linguaggio, culto e rito, un rapporto che può assumere forme di causalità o reciprocità a seconda dei contesti specifici.`, bio: `Ho conseguito la laurea presso l'Università di Bologna (Alma Mater Studiorum). Durante la magistrale ho studiato Storia delle religioni antiche, con una tesi sulla religione dionisiaca nell'Egitto tolemaico. Sono attualmente al secondo anno di dottorato e il mio progetto di ricerca riguarda la diffusione e l'insediamento dei culti isiaci a Rodi e Delo in epoca ellenistica, a partire dall'analisi prosopografica dei fedeli e dallo studio della pratica cultuale. Faccio parte del progetto LARES, contribuendo alla digitalizzazione XML delle schede lemmatiche.` }
   },
   {
     id: "kajava",
@@ -870,7 +870,7 @@ const DAYS = [
 /* ========================================================================= */
 
 const speakerById = Object.fromEntries(SPEAKERS.map(s => [s.id, s]));
-function L(sp) { return sp[currentLang] || sp.en; }
+function TR(sp) { return sp[currentLang] || sp.en; }
 function isPlaceholder(s) {
   if (!s) return true;
   const low = s.toLowerCase();
@@ -936,11 +936,11 @@ function renderSchedule() {
         const speakersHtml = speakers
           .map(sp => `<span class="sp" data-speaker="${sp.id}">${sp.name}</span>`)
           .join(", ");
-        const title = slot.title ? trSlotTitle(slot.title) : (speakers[0] ? L(speakers[0]).talk : "");
+        const title = slot.title ? trSlotTitle(slot.title) : (speakers[0] ? TR(speakers[0]).talk : "");
         const typeLabel = slot.type === "keynote" ? t("talk.type.plenary") : slot.type === "break" ? t("talk.type.break") : slot.type === "info" ? "" : t("talk.type.talk");
 
         // First non-placeholder abstract among this slot's speakers, for the inline excerpt
-        const abstract = speakers.map(sp => L(sp).abstract).find(a => !isPlaceholder(a));
+        const abstract = speakers.map(sp => TR(sp).abstract).find(a => !isPlaceholder(a));
         const clickable = speakers.length > 0;
 
         const row = document.createElement("div");
@@ -1035,7 +1035,7 @@ const modalContent = document.getElementById("modal-content");
 function openSpeaker(id, backIds) {
   const sp = speakerById[id];
   if (!sp) return;
-  const data = L(sp);
+  const data = TR(sp);
   const backLink = backIds
     ? `<div class="modal-back" data-back="${backIds.join(",")}">${t("modal.back")}</div>`
     : "";
@@ -1063,8 +1063,8 @@ function openTalk(ids) {
   if (speakers.length === 0) return;
   if (speakers.length === 1) { openSpeaker(speakers[0].id); return; }
 
-  const talkTitle = L(speakers[0]).talk;
-  const abstract = speakers.map(sp => L(sp).abstract).find(a => !isPlaceholder(a)) || L(speakers[0]).abstract;
+  const talkTitle = TR(speakers[0]).talk;
+  const abstract = speakers.map(sp => TR(sp).abstract).find(a => !isPlaceholder(a)) || TR(speakers[0]).abstract;
 
   const cardsHtml = speakers.map(sp => `
     <div class="modal-speaker-card" data-speaker="${sp.id}">
