@@ -265,14 +265,18 @@
   .search-icon{font-size:13px;opacity:0.6;flex-shrink:0}
   .search-tab input{border:none;outline:none;background:transparent;flex:1;min-width:0;font-family:'Cormorant Garamond',serif;font-size:14.5px;color:var(--ink)}
   .search-tab input::placeholder{color:var(--muted);font-style:italic}
-  .search-dropdown{position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 36px rgba(30,58,53,0.16);overflow:hidden;z-index:10;display:none;max-height:360px;overflow-y:auto}
+
+  /* Results appear as a normal block right below the tabs row — not absolutely
+     positioned — so there is no positioning math that mobile browsers/on-screen
+     keyboards can get wrong. It simply pushes the programme panel down while open. */
+  .search-dropdown{display:none;max-width:1000px;margin:0 auto 1.6rem;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 30px rgba(30,58,53,0.1);overflow:hidden;max-height:360px;overflow-y:auto}
   .search-dropdown.open{display:block}
-  .search-result{display:block;width:100%;text-align:left;padding:0.7rem 1.1rem;cursor:pointer;border-bottom:1px solid var(--border);background:none;transition:background .15s ease}
+  .search-result{display:block;width:100%;text-align:left;padding:0.7rem 1.1rem;cursor:pointer;border-bottom:1px solid var(--border);background:none;font-family:inherit;transition:background .15s ease}
   .search-result:last-child{border-bottom:none}
   .search-result:hover,.search-result.active{background:var(--paper-soft)}
   .search-result .sr-name{display:block;font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:0.06em;color:var(--green-deep);text-transform:uppercase;margin-bottom:0.15rem}
-  .search-result .sr-title{display:block;font-size:14.5px;line-height:1.35;color:var(--ink)}
-  .search-empty{padding:0.9rem 1.1rem;font-size:13px;color:var(--muted);font-style:italic}
+  .search-result .sr-title{display:block;font-family:'Cormorant Garamond',serif;font-size:14.5px;line-height:1.35;color:var(--ink)}
+  .search-empty{padding:0.9rem 1.1rem;font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);font-style:italic}
 
   /* Programme panel — the visual focus of the page */
   .programme-panel{
@@ -514,9 +518,9 @@
           <span class="search-icon">&#128269;</span>
           <input type="text" id="search-input" placeholder="Search speakers &amp; talks…" autocomplete="off" spellcheck="false">
         </div>
-        <div class="search-dropdown" id="search-dropdown"></div>
       </div>
     </div>
+    <div class="search-dropdown" id="search-dropdown"></div>
     <div class="programme-panel reveal">
       <div id="schedule-container"></div>
     </div>
