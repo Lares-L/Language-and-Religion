@@ -16,13 +16,13 @@
   // dropdown behind later same-level sections regardless of z-index. Re-parenting
   // it to <body> and positioning it with `position: fixed` sidesteps the problem.
   document.body.appendChild(dropdown);
-  dropdown.style.position = "fixed";
+  dropdown.style.position = "absolute";
   dropdown.style.zIndex = "99999";
 
   function positionDropdown() {
     const rect = wrap.getBoundingClientRect();
-    dropdown.style.left = `${rect.left}px`;
-    dropdown.style.top = `${rect.bottom + 10}px`;
+    dropdown.style.left = `${rect.left + window.scrollX}px`;
+    dropdown.style.top = `${rect.bottom + window.scrollY + 10}px`;
     dropdown.style.width = `${rect.width}px`;
   }
 
@@ -92,9 +92,44 @@
     activeIndex = -1;
   }
 
+  // Finds the rendered talk-row for this speaker, switches to the right day,
+  // expands its session if needed, and scrolls to it with a brief highlight —
+  // so the person sees exactly when/where the talk happens, not just its abstract.
+  function locateInSchedule(id) {
+    const scheduleContainer = document.getElementById("schedule-container");
+    if (!scheduleContainer) return false;
+
+    const dayEls = scheduleContainer.querySelectorAll(".schedule");
+    for (const dayEl of dayEls) {
+      const rows = dayEl.querySelectorAll(".talk-row[data-speakers]");
+      for (const row of rows) {
+        const ids = row.dataset.speakers.split(",");
+        if (ids.indexOf(id) === -1) continue;
+
+        if (typeof showDay === "function") showDay(dayEl.id);
+
+        const block = row.closest(".session-block");
+        if (block) block.classList.remove("collapsed");
+
+        // Let the day switch / expand settle before measuring scroll position.
+        setTimeout(() => {
+          row.scrollIntoView({ behavior: "smooth", block: "center" });
+          row.classList.add("search-highlight");
+          setTimeout(() => row.classList.remove("search-highlight"), 2200);
+        }, 60);
+
+        return true;
+      }
+    }
+    return false;
+  }
+
   function selectResult(id) {
-    if (!id || typeof openSpeaker !== "function") return;
-    openSpeaker(id);
+    if (!id) return;
+    const found = locateInSchedule(id);
+    // Fall back to opening the speaker card directly if, for whatever reason,
+    // this speaker has no talk row in the rendered schedule.
+    if (!found && typeof openSpeaker === "function") openSpeaker(id);
     input.value = "";
     results = [];
     closeDropdown();
@@ -146,4 +181,9 @@
   window.addEventListener("scroll", () => {
     if (dropdown.classList.contains("open")) positionDropdown();
   }, true);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", () => {
+      if (dropdown.classList.contains("open")) positionDropdown();
+    });
+  }
 })();
