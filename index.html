@@ -265,7 +265,7 @@
   .search-icon{font-size:13px;opacity:0.6;flex-shrink:0}
   .search-tab input{border:none;outline:none;background:transparent;flex:1;min-width:0;font-family:'Cormorant Garamond',serif;font-size:14.5px;color:var(--ink)}
   .search-tab input::placeholder{color:var(--muted);font-style:italic}
-  .search-dropdown{position:fixed;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 36px rgba(30,58,53,0.16);overflow:hidden;z-index:99999;display:none;max-height:360px;overflow-y:auto}
+  .search-dropdown{position:absolute;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 36px rgba(30,58,53,0.16);overflow:hidden;z-index:99999;display:none;max-height:360px;overflow-y:auto}
   .search-dropdown.open{display:block}
   .search-result{display:block;width:100%;text-align:left;padding:0.7rem 1.1rem;cursor:pointer;border-bottom:1px solid var(--border);background:none;transition:background .15s ease}
   .search-result:last-child{border-bottom:none}
@@ -299,6 +299,7 @@
   .talk-row{display:flex;flex-wrap:wrap;gap:0.6rem 1.6rem;padding:1.3rem 1.6rem;border-top:1px solid var(--border);align-items:flex-start}
   .talk-row:first-child{border-top:none}
   .talk-row.clickable{cursor:pointer;transition:background .15s ease}
+  .talk-row.search-highlight{background:rgba(79,125,108,0.18);box-shadow:inset 3px 0 0 var(--green-deep)}
   .talk-row.clickable:hover{background:var(--paper-soft)}
   .talk-main{flex:1 1 300px;min-width:0}
   .talk-meta{display:flex;align-items:baseline;gap:0.7rem;margin-bottom:0.35rem}
