@@ -7,8 +7,9 @@
 (function () {
   const input = document.getElementById("search-input");
   const dropdown = document.getElementById("search-dropdown");
+  const inner = document.getElementById("search-dropdown-inner");
   const wrap = document.getElementById("search-tab-wrap");
-  if (!input || !dropdown || !wrap) return;
+  if (!input || !dropdown || !inner || !wrap) return;
 
   // The dropdown stays nested inside .search-tab-wrap and is positioned with
   // plain CSS (top:100%). To make sure it still paints above the later
@@ -59,16 +60,16 @@
     if (results.length === 0) {
       const q = input.value.trim();
       if (q.length >= MIN_CHARS) {
-        dropdown.innerHTML = `<div class="search-empty">${NO_RESULTS_TEXT[getLang()] || NO_RESULTS_TEXT.en}</div>`;
+        inner.innerHTML = `<div class="search-empty">${NO_RESULTS_TEXT[getLang()] || NO_RESULTS_TEXT.en}</div>`;
         dropdown.classList.add("open");
       } else {
         dropdown.classList.remove("open");
-        dropdown.innerHTML = "";
+        inner.innerHTML = "";
       }
       return;
     }
 
-    dropdown.innerHTML = results.map((r, i) => `
+    inner.innerHTML = results.map((r, i) => `
       <button type="button" class="search-result${i === activeIndex ? " active" : ""}" data-id="${r.id}" data-index="${i}">
         <span class="sr-name">${r.name}</span>
         <span class="sr-title">${r.talk}</span>
