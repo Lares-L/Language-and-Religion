@@ -269,9 +269,19 @@
   /* Results appear as a normal block right below the tabs row — not absolutely
      positioned — so there is no positioning math that mobile browsers/on-screen
      keyboards can get wrong. It simply pushes the programme panel down while open. */
-  .search-dropdown{display:none;max-width:1000px;margin:0 auto 1.6rem;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 12px 30px rgba(30,58,53,0.1);overflow:hidden}
+  .search-dropdown{
+    max-width:1000px;margin:0 auto;max-height:0;opacity:0;
+    background:var(--paper);border:1px solid var(--border);border-radius:14px;
+    box-shadow:0 12px 30px rgba(30,58,53,0.1);overflow:hidden;
+    transition:max-height .32s ease, opacity .25s ease, margin-bottom .32s ease;
+    pointer-events:none;
+  }
+  .search-dropdown.open{max-height:400px;opacity:1;margin-bottom:1.6rem;pointer-events:auto}
   .search-dropdown-inner{max-height:360px;overflow-y:auto}
-  .search-dropdown.open{display:block}
+  .search-dropdown-inner::-webkit-scrollbar{width:6px}
+  .search-dropdown-inner::-webkit-scrollbar-track{background:transparent}
+  .search-dropdown-inner::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .search-dropdown-inner{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
   .search-result{display:block;width:100%;text-align:left;padding:0.7rem 1.1rem;cursor:pointer;border-bottom:1px solid var(--border);background:none;font-family:inherit;transition:background .15s ease}
   .search-result:last-child{border-bottom:none}
   .search-result:hover,.search-result.active{background:var(--paper-soft)}
