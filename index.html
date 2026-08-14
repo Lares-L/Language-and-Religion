@@ -257,7 +257,7 @@
   .day-tab.active{background:var(--green-deep);color:var(--paper);border-color:var(--green-deep);box-shadow:0 8px 20px rgba(79,125,108,0.3)}
 
   /* Search box — same pill relief as the day tabs, plus autocomplete dropdown */
-  .day-tabs-row{display:flex;justify-content:center;align-items:flex-start;gap:0.9rem;flex-wrap:wrap;margin-bottom:2rem}
+  .day-tabs-row{display:flex;justify-content:center;align-items:flex-start;gap:0.9rem;flex-wrap:wrap;margin-bottom:2rem;position:relative;z-index:5}
   .day-tabs-row .day-tabs{margin-bottom:0}
   .search-tab-wrap{position:relative;flex:1 1 260px;max-width:420px}
   .search-tab{display:flex;align-items:center;gap:0.6rem;background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:0.85rem 1.5rem;width:100%;box-shadow:0 4px 12px rgba(30,58,53,0.05);transition:border-color .2s ease, box-shadow .2s ease}
@@ -265,7 +265,7 @@
   .search-icon{font-size:13px;opacity:0.6;flex-shrink:0}
   .search-tab input{border:none;outline:none;background:transparent;flex:1;min-width:0;font-family:'Cormorant Garamond',serif;font-size:14.5px;color:var(--ink)}
   .search-tab input::placeholder{color:var(--muted);font-style:italic}
-  .search-dropdown{position:absolute;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 36px rgba(30,58,53,0.16);overflow:hidden;z-index:99999;display:none;max-height:360px;overflow-y:auto}
+  .search-dropdown{position:absolute;top:calc(100% + 10px);left:0;right:0;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:0 16px 36px rgba(30,58,53,0.16);overflow:hidden;z-index:10;display:none;max-height:360px;overflow-y:auto}
   .search-dropdown.open{display:block}
   .search-result{display:block;width:100%;text-align:left;padding:0.7rem 1.1rem;cursor:pointer;border-bottom:1px solid var(--border);background:none;transition:background .15s ease}
   .search-result:last-child{border-bottom:none}
@@ -327,10 +327,12 @@
   }
 
   @media (max-width:700px){
-    .session-block-body{padding-bottom:0.2rem}
-    .talk-row{padding:0.9rem 1rem;gap:0.3rem}
+    .session-block{margin-bottom:1.6rem}
+    .session-block-body{padding-bottom:0.4rem}
+    .talk-row{padding:1.15rem 1.1rem;gap:0.4rem}
+    .talk-meta{margin-bottom:0.15rem}
     .talk-time{font-size:12px}
-    .talk-title{font-size:16.5px;margin-bottom:0.2rem}
+    .talk-title{font-size:16.5px;margin-bottom:0.3rem;line-height:1.4}
     .talk-speakers{font-size:15px}
     .talk-abstract{
       font-size:13px;line-height:1.45;-webkit-line-clamp:unset;
@@ -376,7 +378,9 @@
   .speaker-list-item:hover .sl-arrow{color:var(--green-deep);transform:translateX(3px)}
 
   @media (max-width:700px){
-    .programme-panel{padding:1.4rem 0.9rem 1rem;border-radius:20px}
+    .programme-panel{padding:1.6rem 1.1rem 1.2rem;border-radius:20px}
+    .search-result{padding:0.9rem 1.2rem}
+    .search-tab{padding:0.9rem 1.4rem}
     .map-static{height:220px}
     .map-caption{padding:0.9rem 1.1rem;font-size:13px}
     .map-caption a{font-size:11px}
@@ -446,10 +450,13 @@
     .day-tabs-row{flex-direction:column;align-items:stretch}
     .search-tab-wrap{max-width:none}
     .search-tab{min-width:0}
-    .session-block-head{padding:1rem 1.1rem}
-    .modal{padding:1.6rem 1.3rem}
-    .modal-close{padding:0.4rem;top:0.6rem;right:0.6rem}
-    .speaker-list-item{padding:0.8rem 1.1rem}
+    .session-block-head{padding:1.15rem 1.25rem}
+    .modal{padding:2rem 1.5rem}
+    .modal h2{font-size:23px;margin-bottom:0.5rem}
+    .modal .info-block{padding:1.1rem 1.2rem;margin-bottom:0.9rem}
+    .modal .info-block + .info-block{margin-top:0}
+    .modal-close{padding:0.5rem;top:0.7rem;right:0.7rem}
+    .speaker-list-item{padding:1rem 1.2rem}
   }
 </style>
 </head>
