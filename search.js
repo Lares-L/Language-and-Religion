@@ -10,21 +10,13 @@
   const wrap = document.getElementById("search-tab-wrap");
   if (!input || !dropdown || !wrap) return;
 
-  // Move the dropdown to the very end of <body>. Several ancestors of the search
-  // box use CSS transforms (the .reveal scroll-in animation), and any element with
-  // a transform creates its own stacking context — that was silently pinning the
-  // dropdown behind later same-level sections regardless of z-index. Re-parenting
-  // it to <body> and positioning it with `position: fixed` sidesteps the problem.
-  document.body.appendChild(dropdown);
-  dropdown.style.position = "absolute";
-  dropdown.style.zIndex = "99999";
-
-  function positionDropdown() {
-    const rect = wrap.getBoundingClientRect();
-    dropdown.style.left = `${rect.left + window.scrollX}px`;
-    dropdown.style.top = `${rect.bottom + window.scrollY + 10}px`;
-    dropdown.style.width = `${rect.width}px`;
-  }
+  // The dropdown stays nested inside .search-tab-wrap and is positioned with
+  // plain CSS (top:100%). To make sure it still paints above the later
+  // "Full programme" panel — which has its own stacking context because of the
+  // .reveal scroll-in animation (any transform creates one) — .day-tabs-row
+  // itself is given an explicit z-index in the stylesheet. No JS position
+  // math needed, which is what made this unreliable on mobile once the
+  // on-screen keyboard changed the visual viewport mid-search.
 
   const NO_RESULTS_TEXT = { en: "No matches found.", it: "Nessun risultato." };
   const MIN_CHARS = 2;
@@ -68,7 +60,6 @@
       const q = input.value.trim();
       if (q.length >= MIN_CHARS) {
         dropdown.innerHTML = `<div class="search-empty">${NO_RESULTS_TEXT[getLang()] || NO_RESULTS_TEXT.en}</div>`;
-        positionDropdown();
         dropdown.classList.add("open");
       } else {
         dropdown.classList.remove("open");
@@ -83,7 +74,6 @@
         <span class="sr-title">${r.talk}</span>
       </button>
     `).join("");
-    positionDropdown();
     dropdown.classList.add("open");
   }
 
@@ -174,16 +164,4 @@
   document.addEventListener("click", (e) => {
     if (!wrap.contains(e.target) && !dropdown.contains(e.target)) closeDropdown();
   });
-
-  window.addEventListener("resize", () => {
-    if (dropdown.classList.contains("open")) positionDropdown();
-  });
-  window.addEventListener("scroll", () => {
-    if (dropdown.classList.contains("open")) positionDropdown();
-  }, true);
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", () => {
-      if (dropdown.classList.contains("open")) positionDropdown();
-    });
-  }
 })();
