@@ -16,6 +16,8 @@
   // dropdown behind later same-level sections regardless of z-index. Re-parenting
   // it to <body> and positioning it with `position: fixed` sidesteps the problem.
   document.body.appendChild(dropdown);
+  dropdown.style.position = "fixed";
+  dropdown.style.zIndex = "99999";
 
   function positionDropdown() {
     const rect = wrap.getBoundingClientRect();
