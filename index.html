@@ -730,7 +730,7 @@ function applyStaticStrings() {
    SESSION / SLOT LABEL TRANSLATIONS (used inside the DAYS schedule data)
    ========================================================================= */
 const SLOT_TITLE_IT = {
-  "Welcome & registration": "Accoglienza e registrazione",
+  "Welcome and registration": "Accoglienza e registrazione",
   "Institutional greetings": "Saluti istituzionali",
   "Discussion": "Discussione",
   "Final discussion": "Discussione finale"
@@ -1013,8 +1013,9 @@ const DAYS = [
         label: "Session I",
         title: { en: "Voicing the Sacred", it: "Dare voce al sacro" },
         sub: { en: "Song, Prayer, and Ritual Formula", it: "Canto, preghiera e formula rituale" },
-        time: "09:00 – 11:05",
+        time: "08:45 – 11:05",
         slots: [
+          { time: "08:45 – 09:00", type: "info", title: "Welcome and registration" },
           { time: "09:00 – 09:45", type: "keynote", speakerIds: ["calame"] },
           { time: "09:45 – 10:05", type: "talk", speakerIds: ["depoli"] },
           { time: "10:05 – 10:35", type: "talk", speakerIds: ["dozza", "licciardello"] },
