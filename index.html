@@ -138,7 +138,7 @@
     --tint-4:#f5efe7;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;overflow-x:hidden}
+  html{scroll-behavior:smooth;overflow-x:clip}
   main > section, #location{scroll-margin-top:90px}
   body::before{
     content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
@@ -146,7 +146,7 @@
     opacity:0.065;mix-blend-mode:multiply;
   }
   body{
-    overflow-x:hidden;
+    overflow-x:clip;
     background:var(--paper);
     background-image:
       radial-gradient(circle at 12% 8%, rgba(127,168,150,0.16), transparent 38%),
@@ -159,15 +159,6 @@
   main{flex:1}
   h1,h2,h3,.eyebrow,.nav-item,.btn{font-family:'Cinzel',serif;letter-spacing:0.08em}
   a{color:inherit}
-  .notice-banner{
-    background:rgba(255,255,255,0.32);
-    backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);
-    border-bottom:1px solid rgba(255,255,255,0.5);
-    box-shadow:0 1px 0 rgba(255,255,255,0.5) inset;
-  }
-  .notice-banner-inner{max-width:820px;margin:0 auto;padding:0.6rem 2rem;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:13.5px;line-height:1.5;letter-spacing:0.01em;color:#5d7d72}
-  .notice-banner-inner a{color:#5d7d72;text-decoration:underline;text-decoration-color:rgba(93,125,114,0.4);text-underline-offset:2px}
-  .notice-banner-inner a:hover{text-decoration-color:#5d7d72}
 
   header{position:sticky;top:0;z-index:20;background:rgba(246,243,236,0.55);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid rgba(255,255,255,0.4);box-shadow:0 1px 0 rgba(255,255,255,0.6) inset, 0 4px 20px rgba(30,58,53,0.06);display:flex;align-items:center;justify-content:space-between;padding:0.9rem 3rem;gap:1rem;flex-wrap:wrap}
   .nav-left,.nav-right{display:flex;gap:1.7rem;flex:1 1 0;min-width:120px;align-items:center}
@@ -219,6 +210,16 @@
   .section-title-hero{font-size:clamp(28px,3.6vw,40px)}
   .section-title-hero::after{left:50%;transform:translateX(-50%)}
   .section-sub{color:var(--muted);font-style:italic;margin-bottom:2.2rem;max-width:640px}
+  /* Epigraph binding the conference question to the programme */
+  .programme-epigraph{
+    max-width:780px;margin:0 auto 1.6rem;padding:1.5rem 1.6rem 0;
+    font-size:clamp(15px,1.5vw,18.5px);line-height:1.68;font-style:italic;
+    color:var(--green-deep);text-wrap:balance;position:relative
+  }
+  .programme-epigraph::before{
+    content:"";display:block;width:56px;height:1px;background:var(--green);
+    opacity:.55;margin:0 auto 1.25rem
+  }
 
   /* Info strip */
   .info-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;max-width:1000px;margin:0 auto 3.5rem}
@@ -278,7 +279,7 @@
     pointer-events:none;
   }
   .search-dropdown.open{max-height:400px;opacity:1;margin-bottom:1.6rem;pointer-events:auto}
-  .search-dropdown-inner{max-height:360px;overflow-y:auto}
+  .search-dropdown-inner{max-height:360px;overflow-y:auto;overscroll-behavior:contain}
   .search-dropdown-inner::-webkit-scrollbar{width:6px}
   .search-dropdown-inner::-webkit-scrollbar-track{background:transparent}
   .search-dropdown-inner::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
@@ -306,6 +307,7 @@
   .session-block{margin-bottom:1.3rem;border:none;border-radius:18px;overflow:hidden;background:var(--paper);box-shadow:0 8px 22px rgba(30,58,53,0.08)}
   .session-block-head{background:var(--green-deep);color:var(--paper);padding:1.1rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;user-select:none}
   .session-block-head .sname{font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.08em;font-weight:600}
+  .session-block-head .ssub{font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:0.06em;color:rgba(246,243,236,0.92);margin-top:0.2rem}
   .session-block-head .stime{font-size:13.5px;color:rgba(246,243,236,0.85);font-style:italic;margin-top:0.15rem}
   .session-chevron{font-size:16px;transition:transform .2s ease;flex-shrink:0}
   .session-block.collapsed .session-chevron{transform:rotate(-90deg)}
@@ -362,6 +364,11 @@
       font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-deep);opacity:0.75;
     }
     .talk-row.abstract-open[data-has-abstract="1"]::after{display:none}
+    /* the preview is capped at 400px: fade it out so a cut abstract does not look broken */
+    .talk-row.abstract-open.abstract-clipped .talk-abstract{
+      -webkit-mask-image:linear-gradient(to bottom,#000 76%,transparent 100%);
+      mask-image:linear-gradient(to bottom,#000 76%,transparent 100%)
+    }
     .talk-row.abstract-open .talk-abstract{max-height:400px;opacity:1;padding-top:0.7rem}
     .talk-abstract-link{display:none}
     .talk-row.abstract-open .talk-abstract-link{
@@ -375,7 +382,7 @@
   /* Speakers — scrollable alphabetical list */
   .speaker-list{
     max-width:700px;margin:0 auto;
-    max-height:520px;overflow-y:auto;
+    max-height:520px;overflow-y:auto;overscroll-behavior:contain;
     background:var(--paper-soft);border:1px solid var(--border);border-radius:16px;
     box-shadow:0 8px 20px rgba(30,58,53,0.05);
   }
@@ -405,7 +412,7 @@
   /* Modal */
   .modal-overlay{position:fixed;inset:0;background:rgba(18,33,30,0.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:1.5rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease, visibility 0s linear .22s}
   .modal-overlay.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s ease, visibility 0s linear 0s}
-  .modal{background:var(--paper);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border);transform:translateY(18px) scale(0.97);opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .22s ease}
+  .modal{background:var(--paper);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;overscroll-behavior:contain;padding:2.2rem;position:relative;box-shadow:0 30px 70px rgba(18,33,30,0.4);border:1px solid var(--border);transform:translateY(18px) scale(0.97);opacity:0;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .22s ease}
   .modal-overlay.open .modal{transform:translateY(0) scale(1);opacity:1}
   @media (prefers-reduced-motion: reduce){
     .modal-overlay,.modal{transition:none}
@@ -455,16 +462,18 @@
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none !important}.reveal{opacity:1;transform:none}.hero-dark-inner{opacity:1;animation:none}}
 
   @media (max-width:600px){
-    .notice-banner-inner{padding:0.8rem 1.2rem;font-size:13px}
-    header{padding:0.8rem 1.3rem;flex-direction:column;gap:0.6rem}
-    .brand-link{order:-1}
-    .nav-left,.nav-right{flex:0 0 auto;justify-content:center;gap:1.4rem;min-width:0}
+    header{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;padding:0.65rem 0.75rem;gap:0.35rem 0.85rem}
+    .brand-link{order:-1;flex:0 0 100%;display:flex;justify-content:center}
+    .brand-logo{height:40px}
+    /* promote the links out of the two <nav> boxes so all four share one centred row */
+    .nav-left,.nav-right{display:contents}
+    .nav-item{font-size:10.5px;letter-spacing:0.07em;padding:0.3rem 0 0.25rem}
     .hero-dark{padding:3.5rem 1.3rem 2.8rem}
     .hero-dark h1{font-size:26px}
     main > section{padding:0 1.3rem 3rem}
     .day-tab{padding:0.8rem 1.5rem;flex:1 1 auto;text-align:center}
     .day-tabs-row{flex-direction:column;align-items:stretch}
-    .search-tab-wrap{max-width:none}
+    .search-tab-wrap{max-width:none;flex:0 0 auto}
     .search-tab{min-width:0}
     .session-block-head{padding:1.15rem 1.25rem}
     .modal{padding:2rem 1.5rem}
@@ -473,6 +482,15 @@
     .modal .info-block + .info-block{margin-top:0}
     .modal-close{padding:0.5rem;top:0.7rem;right:0.7rem}
     .speaker-list-item{padding:1rem 1.2rem}
+    .talk-type{font-size:10px;letter-spacing:0.1em}
+    /* full-height list: a nested scroller inside a scrolling page traps touch */
+    .speaker-list{max-height:none;overflow-y:visible}
+    /* stop the page behind the modal from scrolling away under the user's finger */
+    html.modal-open,html.modal-open body{overflow:hidden}
+    .modal-close{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;padding:0;top:0.45rem;right:0.45rem}
+    .footer-links a{display:inline-block;padding:0.45rem 0.6rem}
+    .talk-speakers .sp{padding:0.3rem 0}
+    main > section, #location{scroll-margin-top:112px}
   }
 </style>
 </head>
@@ -496,12 +514,6 @@
 
 <main>
 
-<div class="notice-banner">
-  <div class="notice-banner-inner">
-    <span data-i18n-html="banner.text">The programme has not yet been published or shared with the public. In the meantime, we kindly ask each speaker to review their own card, as a few details may have shifted slightly during translation and could contain small inaccuracies — if you notice anything that needs correcting, please get in touch with the <a href="mailto:gabriele.gregorio@studio.unibo.it">organising committee</a>.</span>
-  </div>
-</div>
-
 <div class="hero-dark">
   <div class="hero-dark-inner">
     <div class="eyebrow" data-i18n="hero.eyebrow">International Conference</div>
@@ -519,6 +531,7 @@
 <section id="programme">
   <div class="content content-wide">
     <div class="section-block reveal" style="text-align:center;margin-top:2.2rem">
+      <blockquote class="programme-epigraph" data-i18n="programme.epigraph">“How do religious experiences become communicable, how do communicative practices become religiously authoritative, and how do languages themselves shape the ways in which communities experience, remember, negotiate, and transform the divine?”</blockquote>
       <div class="section-title section-title-hero" data-i18n="programme.title">Full programme</div>
       <p class="section-sub" style="margin-left:auto;margin-right:auto" data-i18n="programme.sub">Select a day to browse the sessions. Click on a talk for full details.</p>
     </div>
@@ -625,10 +638,6 @@ const STRINGS = {
   "nav.location": { en: "Location", it: "Sede" },
   "nav.speakers": { en: "Speakers", it: "Relatori" },
   "nav.info": { en: "Information", it: "Informazioni" },
-  "banner.text": {
-    en: 'The programme has not yet been published or shared with the public. In the meantime, we kindly ask each speaker to review their own card, as a few details may have shifted slightly during translation and could contain small inaccuracies — if you notice anything that needs correcting, please get in touch with the <a href="mailto:gabriele.gregorio@studio.unibo.it">organising committee</a>.',
-    it: 'Il programma non è ancora stato pubblicato né reso pubblico. Nel frattempo, chiediamo gentilmente a ciascun relatore di controllare la propria scheda: alcuni dettagli potrebbero essersi leggermente alterati durante la traduzione e contenere piccole imprecisioni — se noti qualcosa da correggere, contatta il <a href="mailto:gabriele.gregorio@studio.unibo.it">comitato organizzativo</a>.'
-  },
   "hero.eyebrow": { en: "International Conference", it: "Convegno Internazionale" },
   "hero.dates": { en: "23–24 November 2026 · Bologna", it: "23–24 novembre 2026 · Bologna" },
   "hero.lede": {
@@ -638,6 +647,10 @@ const STRINGS = {
   "hero.view_programme": { en: "View the programme", it: "Vai al programma" },
   "hero.browse_speakers": { en: "Browse the speakers", it: "Sfoglia i relatori" },
   "hero.add_calendar": { en: "+ Add to calendar", it: "+ Aggiungi al calendario" },
+  "programme.epigraph": {
+    en: "“How do religious experiences become communicable, how do communicative practices become religiously authoritative, and how do languages themselves shape the ways in which communities experience, remember, negotiate, and transform the divine?”",
+    it: "«Come le esperienze religiose diventano comunicabili, come le pratiche comunicative acquisiscono autorità religiosa, e come le lingue stesse plasmano i modi in cui le comunità fanno esperienza del divino, lo ricordano, lo negoziano e lo trasformano?»"
+  },
   "programme.title": { en: "Full programme", it: "Programma completo" },
   "programme.sub": { en: "Select a day to browse the sessions. Click on a talk for full details.", it: "Seleziona un giorno per sfogliare le sessioni. Clicca su un intervento per i dettagli completi." },
   "info.dates_label": { en: "Dates", it: "Date" },
@@ -672,7 +685,7 @@ const STRINGS = {
     en: "Religions and Language / Languages and Religion — Bologna, 23–24 November 2026",
     it: "Religions and Language / Languages and Religion — Bologna, 23–24 novembre 2026"
   },
-  "talk.type.plenary": { en: "Plenary", it: "Plenaria" },
+  "talk.type.plenary": { en: "Lectio inauguralis", it: "Lectio inauguralis" },
   "talk.type.break": { en: "Break", it: "Pausa" },
   "talk.type.talk": { en: "Talk", it: "Intervento" },
   "talk.count.one": { en: "talk", it: "intervento" },
@@ -725,7 +738,8 @@ const SLOT_TITLE_IT = {
 const SESSION_LABEL_IT = {
   "Session I": "Sessione I", "Session II": "Sessione II", "Session III": "Sessione III", "Session IV": "Sessione IV",
   "Session V": "Sessione V", "Session VI": "Sessione VI", "Session VII": "Sessione VII", "Session VIII": "Sessione VIII",
-  "Coffee break": "Pausa caffè", "Lunch break": "Pausa pranzo"
+  "Coffee break": "Pausa caffè", "Lunch break": "Pausa pranzo",
+  "Concluding remarks": "Conclusioni"
 };
 function trSlotTitle(s) { return currentLang === "it" ? (SLOT_TITLE_IT[s] || s) : s; }
 function trSessionLabel(s) { return currentLang === "it" ? (SESSION_LABEL_IT[s] || s) : s; }
@@ -799,8 +813,8 @@ const SPEAKERS = [
     id: "tommasi",
     name: `Chiara Ombretta Tommasi`,
     affil: `Università di Pisa`,
-    en: { talk: `To be defined`, abstract: `(to be received)`, bio: `(to be received)` },
-    it: { talk: `Da definire`, abstract: `(in fase di ricezione)`, bio: `(in fase di ricezione)` }
+    en: { talk: `Christian Terms in Chinese Sources: The Translatability of Religious Concepts across Cultural Systems`, abstract: `(to be received)`, bio: `(to be received)` },
+    it: { talk: `Termini cristiani nelle fonti cinesi: la traducibilità dei concetti religiosi tra sistemi culturali`, abstract: `(in fase di ricezione)`, bio: `(in fase di ricezione)` }
   },
   {
     id: "mari",
@@ -887,8 +901,8 @@ Author of numerous publications, particularly in the field of the social history
     id: "georgoudi",
     name: `Stella Georgoudi`,
     affil: `Ecole Pratique des Hautes Etudes`,
-    en: { talk: `To be defined`, abstract: `(to be received)`, bio: `(to be received)` },
-    it: { talk: `Da definire`, abstract: `(in fase di ricezione)`, bio: `(in fase di ricezione)` }
+    en: { talk: `Orality and Writing in Ancient Greek Religion`, abstract: `(to be received)`, bio: `(to be received)` },
+    it: { talk: `Oralità e scrittura nella religione greca antica`, abstract: `(in fase di ricezione)`, bio: `(in fase di ricezione)` }
   },
   {
     id: "chiari",
@@ -997,50 +1011,56 @@ const DAYS = [
     sessions: [
       {
         label: "Session I",
-        time: "09:00 – 11:25",
+        title: { en: "Voicing the Sacred", it: "Dare voce al sacro" },
+        sub: { en: "Song, Prayer, and Ritual Formula", it: "Canto, preghiera e formula rituale" },
+        time: "09:00 – 11:05",
         slots: [
-          { time: "09:00 – 09:30", type: "info", title: "Welcome & registration" },
-          { time: "09:30 – 09:45", type: "info", title: "Institutional greetings" },
-          { time: "09:45 – 10:30", type: "keynote", speakerIds: ["calame"] },
-          { time: "10:30 – 10:50", type: "talk", speakerIds: ["rosamilia"] },
-          { time: "10:50 – 11:10", type: "talk", speakerIds: ["depoli"] },
-          { time: "11:10 – 11:25", type: "break", title: "Discussion" }
+          { time: "09:00 – 09:45", type: "keynote", speakerIds: ["calame"] },
+          { time: "09:45 – 10:05", type: "talk", speakerIds: ["depoli"] },
+          { time: "10:05 – 10:35", type: "talk", speakerIds: ["dozza", "licciardello"] },
+          { time: "10:35 – 10:55", type: "talk", speakerIds: ["santamaria"] },
+          { time: "10:55 – 11:05", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "11:25 – 11:40", isBreak: true },
+      { label: "Coffee break", time: "11:05 – 11:25", isBreak: true },
       {
         label: "Session II",
-        time: "11:40 – 13:20",
+        title: { en: "Regulating the Sacred", it: "Regolare il sacro" },
+        sub: { en: "Calendars, Spaces, and Cultic Codes", it: "Calendari, spazi e codici cultuali" },
+        time: "11:25 – 12:40",
         slots: [
-          { time: "11:40 – 12:00", type: "talk", speakerIds: ["bigoni"] },
-          { time: "12:00 – 12:30", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
-          { time: "12:30 – 12:50", type: "talk", speakerIds: ["camassa"] },
-          { time: "12:50 – 13:10", type: "talk", speakerIds: ["tommasi"] },
-          { time: "13:10 – 13:20", type: "break", title: "Discussion" }
+          { time: "11:25 – 11:45", type: "talk", speakerIds: ["rosamilia"] },
+          { time: "11:45 – 12:05", type: "talk", speakerIds: ["polinskaya"] },
+          { time: "12:05 – 12:25", type: "talk", speakerIds: ["jimenez"] },
+          { time: "12:25 – 12:40", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
+      { label: "Lunch break", time: "12:40 – 14:15", isBreak: true },
       {
         label: "Session III",
-        time: "15:00 – 16:20",
+        title: { en: "Translating the Divine", it: "Tradurre il divino" },
+        sub: { en: "Knowledge, Language, and Religious Imaginaries", it: "Sapere, lingua e immaginari religiosi" },
+        time: "14:15 – 16:00",
         slots: [
-          { time: "15:00 – 15:20", type: "talk", speakerIds: ["mari"] },
-          { time: "15:20 – 15:40", type: "talk", speakerIds: ["borgatti"] },
-          { time: "15:40 – 16:00", type: "talk", speakerIds: ["kajava"] },
-          { time: "16:00 – 16:20", type: "break", title: "Discussion" }
+          { time: "14:15 – 14:35", type: "talk", speakerIds: ["tommasi"] },
+          { time: "14:35 – 15:05", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
+          { time: "15:05 – 15:25", type: "talk", speakerIds: ["bigoni"] },
+          { time: "15:25 – 15:45", type: "talk", speakerIds: ["tripaldi"] },
+          { time: "15:45 – 16:00", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:20 – 16:40", isBreak: true },
+      { label: "Coffee break", time: "16:00 – 16:20", isBreak: true },
       {
         label: "Session IV",
-        time: "16:40 – 18:40",
+        title: { en: "Speaking with the Gods", it: "Parlare con gli dei" },
+        sub: { en: "Oracles, Trust, and Religious Dialogue", it: "Oracoli, fiducia e dialogo religioso" },
+        time: "16:20 – 18:00",
         slots: [
-          { time: "16:40 – 17:00", type: "talk", speakerIds: ["cristofori"] },
-          { time: "17:00 – 17:20", type: "talk", speakerIds: ["gordillo"] },
-          { time: "17:20 – 17:40", type: "talk", speakerIds: ["gimenez"] },
-          { time: "17:40 – 18:00", type: "talk", speakerIds: ["arcari"] },
-          { time: "18:00 – 18:20", type: "talk", speakerIds: ["filippini"] },
-          { time: "18:20 – 18:40", type: "break", title: "Final discussion" }
+          { time: "16:20 – 16:40", type: "talk", speakerIds: ["mari"] },
+          { time: "16:40 – 17:00", type: "talk", speakerIds: ["borgatti"] },
+          { time: "17:00 – 17:20", type: "talk", speakerIds: ["peels"] },
+          { time: "17:20 – 17:40", type: "talk", speakerIds: ["gordillo"] },
+          { time: "17:40 – 18:00", type: "break", title: "Discussion" }
         ]
       }
     ]
@@ -1051,49 +1071,64 @@ const DAYS = [
     sessions: [
       {
         label: "Session V",
-        time: "09:30 – 10:50",
+        title: { en: "From Voice to Text", it: "Dalla voce al testo" },
+        sub: { en: "Orality, Writing, and the Transmission of Religious Knowledge", it: "Oralità, scrittura e trasmissione del sapere religioso" },
+        time: "09:15 – 10:55",
         slots: [
-          { time: "09:30 – 09:50", type: "keynote", speakerIds: ["bernabe"] },
-          { time: "09:50 – 10:10", type: "talk", speakerIds: ["georgoudi"] },
-          { time: "10:10 – 10:30", type: "talk", speakerIds: ["chiari"] },
-          { time: "10:30 – 10:50", type: "break", title: "Discussion" }
+          { time: "09:15 – 09:35", type: "talk", speakerIds: ["georgoudi"] },
+          { time: "09:35 – 09:55", type: "talk", speakerIds: ["annese"] },
+          { time: "09:55 – 10:15", type: "talk", speakerIds: ["brancaccio"] },
+          { time: "10:15 – 10:35", type: "talk", speakerIds: ["arcari"] },
+          { time: "10:35 – 10:55", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "10:50 – 11:40", isBreak: true },
+      { label: "Coffee break", time: "10:55 – 11:10", isBreak: true },
       {
         label: "Session VI",
-        time: "11:40 – 13:30",
+        title: { en: "Naming and Transforming the Divine", it: "Nominare e trasformare il divino" },
+        sub: { en: "Religious Lexicon, Onomastics, and Cultural Hybridisation", it: "Lessico religioso, onomastica e ibridazione culturale" },
+        time: "11:10 – 13:10",
         slots: [
-          { time: "11:40 – 12:00", type: "talk", speakerIds: ["ciarini"] },
-          { time: "12:00 – 12:30", type: "talk", speakerIds: ["dozza", "licciardello"] },
-          { time: "12:30 – 12:50", type: "talk", speakerIds: ["mura"] },
-          { time: "12:50 – 13:10", type: "talk", speakerIds: ["bednarek"] },
-          { time: "13:10 – 13:30", type: "break", title: "Final discussion" }
+          { time: "11:10 – 11:30", type: "talk", speakerIds: ["gimenez"] },
+          { time: "11:30 – 11:50", type: "talk", speakerIds: ["gillmeister"] },
+          { time: "11:50 – 12:10", type: "talk", speakerIds: ["cristofori"] },
+          { time: "12:10 – 12:30", type: "talk", speakerIds: ["filippini"] },
+          { time: "12:30 – 12:50", type: "talk", speakerIds: ["tosques"] },
+          { time: "12:50 – 13:10", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
+      { label: "Lunch break", time: "13:10 – 14:30", isBreak: true },
       {
         label: "Session VII",
-        time: "15:00 – 16:40",
+        title: { en: "Naming, Remembering, and Reconfiguring the Divine", it: "Nominare, ricordare e riconfigurare il divino" },
+        sub: { en: "Terminology, Onomastics, and Religious Traditions", it: "Terminologia, onomastica e tradizioni religiose" },
+        time: "14:30 – 16:25",
         slots: [
-          { time: "15:00 – 15:20", type: "talk", speakerIds: ["peels"] },
-          { time: "15:20 – 15:40", type: "talk", speakerIds: ["tosques"] },
-          { time: "15:40 – 16:00", type: "talk", speakerIds: ["gillmeister"] },
-          { time: "16:00 – 16:20", type: "talk", speakerIds: ["polinskaya"] },
-          { time: "16:20 – 16:40", type: "break", title: "Discussion" }
+          { time: "14:30 – 14:50", type: "talk", speakerIds: ["bernabe"] },
+          { time: "14:50 – 15:10", type: "talk", speakerIds: ["mura"] },
+          { time: "15:10 – 15:30", type: "talk", speakerIds: ["bednarek"] },
+          { time: "15:30 – 15:50", type: "talk", speakerIds: ["ciarini"] },
+          { time: "15:50 – 16:10", type: "talk", speakerIds: ["chiari"] },
+          { time: "16:10 – 16:25", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:40 – 17:00", isBreak: true },
+      { label: "Coffee break", time: "16:25 – 16:45", isBreak: true },
       {
         label: "Session VIII",
-        time: "17:00 – 19:00",
+        title: { en: "Embodied Encounters with the Divine", it: "Incontri incarnati con il divino" },
+        sub: { en: "Body, Senses, Incarnation, and Salvation", it: "Corpo, sensi, incarnazione e salvezza" },
+        time: "16:45 – 17:45",
         slots: [
-          { time: "17:00 – 17:20", type: "talk", speakerIds: ["annese"] },
-          { time: "17:20 – 17:40", type: "talk", speakerIds: ["tripaldi"] },
-          { time: "17:40 – 18:00", type: "talk", speakerIds: ["brancaccio"] },
-          { time: "18:00 – 18:20", type: "talk", speakerIds: ["jimenez"] },
-          { time: "18:20 – 18:40", type: "talk", speakerIds: ["santamaria"] },
-          { time: "18:40 – 19:00", type: "break", title: "Final discussion" }
+          { time: "16:45 – 17:05", type: "talk", speakerIds: ["kajava"] },
+          { time: "17:05 – 17:25", type: "talk", speakerIds: ["camassa"] },
+          { time: "17:25 – 17:45", type: "break", title: "Discussion" }
+        ]
+      },
+      {
+        label: "Concluding remarks",
+        time: "17:45 – 18:00",
+        slots: [
+          { time: "17:45 – 18:00", type: "break", title: "Final discussion" }
         ]
       }
     ]
@@ -1155,8 +1190,9 @@ function renderSchedule() {
       head.className = "session-block-head";
       head.innerHTML = `
         <div>
-          <div class="sname">${trSessionLabel(session.label)}</div>
-          <div class="stime">${session.time} &middot; ${talkCount} ${talkCount === 1 ? t("talk.count.one") : t("talk.count.many")}</div>
+          <div class="sname">${trSessionLabel(session.label)}${session.title ? " — " + (session.title[currentLang] || session.title.en) : ""}</div>
+          ${session.sub ? `<div class="ssub">${session.sub[currentLang] || session.sub.en}</div>` : ""}
+          <div class="stime">${session.time}${talkCount ? ` &middot; ${talkCount} ${talkCount === 1 ? t("talk.count.one") : t("talk.count.many")}` : ""}</div>
         </div>
         <span class="session-chevron">&#9660;</span>`;
       head.addEventListener("click", () => block.classList.toggle("collapsed"));
@@ -1232,6 +1268,8 @@ document.addEventListener("click", (e) => {
   const isMobile = window.matchMedia("(max-width:700px)").matches;
   if (isMobile && row.dataset.hasAbstract === "1" && !row.classList.contains("abstract-open")) {
     row.classList.add("abstract-open");
+    const ab = row.querySelector(".talk-abstract");
+    if (ab && ab.scrollHeight > 400) row.classList.add("abstract-clipped");
     return;
   }
   openTalk(row.dataset.speakers.split(","));
@@ -1333,6 +1371,10 @@ document.addEventListener("click", (e) => {
   if (e.target === overlay) overlay.classList.remove("open");
 });
 document.getElementById("modal-close").addEventListener("click", () => overlay.classList.remove("open"));
+// Mirror the overlay's state on <html> so the CSS can freeze the page behind it on small screens.
+new MutationObserver(() => {
+  document.documentElement.classList.toggle("modal-open", overlay.classList.contains("open"));
+}).observe(overlay, { attributes: true, attributeFilter: ["class"] });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") overlay.classList.remove("open"); });
 
 // --- Full render pass (called on load and whenever the language toggles) ---
