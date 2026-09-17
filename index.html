@@ -431,6 +431,8 @@
   .modal .affil{color:var(--muted);font-style:italic;margin-bottom:1.2rem}
   .modal p{margin-bottom:0.9rem;color:var(--ink);font-size:16px}
   .modal .talk-title{font-size:18px;font-style:italic;color:var(--green-deep);margin-bottom:0.9rem}
+  .card-lang-switch{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:1px solid var(--border);padding:0 0 0.15rem;margin:-0.3rem 0 1.1rem;cursor:pointer;transition:color .15s ease,border-color .15s ease}
+  .card-lang-switch:hover{color:var(--green-deep);border-bottom-color:var(--green-deep)}
   .modal .block-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;margin:1.2rem 0 0.4rem}
   .modal .info-block{background:var(--paper-soft);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:0.2rem}
   .modal .info-block .block-label{margin-top:0}
@@ -744,6 +746,8 @@ function applyStaticStrings() {
    ========================================================================= */
 const SLOT_TITLE_IT = {
   "Welcome and registration": "Accoglienza e registrazione",
+  "Introduction": "Introduzione",
+  "Closing remarks": "Osservazioni conclusive",
   "Institutional greetings": "Saluti istituzionali",
   "Discussion": "Discussione",
   "Final discussion": "Discussione finale"
@@ -751,6 +755,7 @@ const SLOT_TITLE_IT = {
 const SESSION_LABEL_IT = {
   "Session I": "Sessione I", "Session II": "Sessione II", "Session III": "Sessione III", "Session IV": "Sessione IV",
   "Session V": "Sessione V", "Session VI": "Sessione VI", "Session VII": "Sessione VII", "Session VIII": "Sessione VIII",
+  "Opening": "Apertura",
   "Coffee break": "Pausa caffè", "Lunch break": "Pausa pranzo",
   "Concluding remarks": "Conclusioni"
 };
@@ -1049,61 +1054,68 @@ const DAYS = [
     label: "23 November",
     sessions: [
       {
+        label: "Opening",
+        time: "09:30 – 09:50",
+        slots: [
+          { time: "09:30 – 09:45", type: "info", title: "Institutional greetings" },
+          { time: "09:45 – 09:50", type: "info", title: "Introduction" }
+        ]
+      },
+      {
         label: "Session I",
-        chair: "Stella Georgoudi",
+        chair: "Manuela Mari",
         title: { en: "Voicing the Sacred", it: "Dare voce al sacro" },
         sub: { en: "Song, Prayer, and Ritual Formula", it: "Canto, preghiera e formula rituale" },
-        time: "08:45 – 11:05",
+        time: "09:50 – 11:45",
         slots: [
-          { time: "08:45 – 09:00", type: "info", title: "Welcome and registration" },
-          { time: "09:00 – 09:45", type: "keynote", speakerIds: ["calame"] },
-          { time: "09:45 – 10:05", type: "talk", speakerIds: ["depoli"] },
-          { time: "10:05 – 10:35", type: "talk", speakerIds: ["dozza", "licciardello"] },
-          { time: "10:35 – 10:55", type: "talk", speakerIds: ["santamaria"] },
-          { time: "10:55 – 11:05", type: "break", title: "Discussion" }
+          { time: "09:50 – 10:35", type: "keynote", speakerIds: ["calame"] },
+          { time: "10:35 – 10:55", type: "talk", speakerIds: ["depoli"] },
+          { time: "10:55 – 11:25", type: "talk", speakerIds: ["dozza", "licciardello"] },
+          { time: "11:25 – 11:45", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "11:05 – 11:25", isBreak: true },
+      { label: "Coffee break", time: "11:45 – 12:00", isBreak: true },
       {
         label: "Session II",
-        chair: "Manuela Mari",
-        title: { en: "Regulating the Sacred", it: "Regolare il sacro" },
-        sub: { en: "Calendars, Spaces, and Cultic Codes", it: "Calendari, spazi e codici cultuali" },
-        time: "11:25 – 12:40",
-        slots: [
-          { time: "11:25 – 11:45", type: "talk", speakerIds: ["rosamilia"] },
-          { time: "11:45 – 12:05", type: "talk", speakerIds: ["polinskaya"] },
-          { time: "12:05 – 12:25", type: "talk", speakerIds: ["jimenez"] },
-          { time: "12:25 – 12:40", type: "break", title: "Discussion" }
-        ]
-      },
-      { label: "Lunch break", time: "12:40 – 14:15", isBreak: true },
-      {
-        label: "Session III",
-        chair: "Giorgio Camassa",
+        chair: "Luca Arcari",
         title: { en: "Translating the Divine", it: "Tradurre il divino" },
         sub: { en: "Knowledge, Language, and Religious Imaginaries", it: "Sapere, lingua e immaginari religiosi" },
-        time: "14:15 – 16:00",
+        time: "12:00 – 13:25",
         slots: [
-          { time: "14:15 – 14:35", type: "talk", speakerIds: ["tommasi"] },
-          { time: "14:35 – 15:05", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
-          { time: "15:05 – 15:25", type: "talk", speakerIds: ["bigoni"] },
-          { time: "15:25 – 15:45", type: "talk", speakerIds: ["tripaldi"] },
-          { time: "15:45 – 16:00", type: "break", title: "Discussion" }
+          { time: "12:00 – 12:20", type: "talk", speakerIds: ["tommasi"] },
+          { time: "12:20 – 12:40", type: "talk", speakerIds: ["bigoni"] },
+          { time: "12:40 – 13:10", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
+          { time: "13:10 – 13:25", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:00 – 16:20", isBreak: true },
+      { label: "Lunch break", time: "13:25 – 14:55", isBreak: true },
+      {
+        label: "Session III",
+        chair: "Alberto Bernabé",
+        title: { en: "Regulating the Sacred", it: "Regolare il sacro" },
+        sub: { en: "Calendars, Spaces, and Cultic Codes", it: "Calendari, spazi e codici cultuali" },
+        time: "14:55 – 16:35",
+        slots: [
+          { time: "14:55 – 15:15", type: "talk", speakerIds: ["rosamilia"] },
+          { time: "15:15 – 15:35", type: "talk", speakerIds: ["polinskaya"] },
+          { time: "15:35 – 15:55", type: "talk", speakerIds: ["jimenez"] },
+          { time: "15:55 – 16:15", type: "talk", speakerIds: ["santamaria"] },
+          { time: "16:15 – 16:35", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Coffee break", time: "16:35 – 16:50", isBreak: true },
       {
         label: "Session IV",
-        chair: "Mika Kajava",
+        chair: "Stella Georgoudi",
         title: { en: "Dealing with the Gods", it: "Trattare con gli dei" },
         sub: { en: "Oracles, Trust, and Religious Dialogue", it: "Oracoli, fiducia e dialogo religioso" },
-        time: "16:20 – 17:40",
+        time: "16:50 – 18:25",
         slots: [
-          { time: "16:20 – 16:40", type: "talk", speakerIds: ["mari"] },
-          { time: "16:40 – 17:00", type: "talk", speakerIds: ["borgatti"] },
-          { time: "17:00 – 17:20", type: "talk", speakerIds: ["gordillo"] },
-          { time: "17:20 – 17:40", type: "break", title: "Discussion" }
+          { time: "16:50 – 17:10", type: "talk", speakerIds: ["mari"] },
+          { time: "17:10 – 17:30", type: "talk", speakerIds: ["borgatti"] },
+          { time: "17:30 – 17:50", type: "talk", speakerIds: ["gordillo"] },
+          { time: "17:50 – 18:10", type: "talk", speakerIds: ["cristofori"] },
+          { time: "18:10 – 18:25", type: "break", title: "Discussion" }
         ]
       }
     ]
@@ -1113,68 +1125,69 @@ const DAYS = [
     label: "24 November",
     sessions: [
       {
-        label: "Session V",
-        chair: "Alberto Bernabé",
-        title: { en: "From Voice to Text", it: "Dalla voce al testo" },
-        sub: { en: "Orality, Writing, and the Transmission of Religious Knowledge", it: "Oralità, scrittura e trasmissione del sapere religioso" },
-        time: "09:15 – 10:55",
-        slots: [
-          { time: "09:15 – 09:35", type: "talk", speakerIds: ["georgoudi"] },
-          { time: "09:35 – 09:55", type: "talk", speakerIds: ["annese"] },
-          { time: "09:55 – 10:15", type: "talk", speakerIds: ["brancaccio"] },
-          { time: "10:15 – 10:35", type: "talk", speakerIds: ["arcari"] },
-          { time: "10:35 – 10:55", type: "break", title: "Discussion" }
-        ]
-      },
-      { label: "Coffee break", time: "10:55 – 11:10", isBreak: true },
-      {
         label: "Session VI",
         chair: "Rocío Gordillo Hervás",
-        title: { en: "Naming and Transforming the Divine", it: "Nominare e trasformare il divino" },
-        sub: { en: "Religious Lexicon, Onomastics, and Cultural Hybridisation", it: "Lessico religioso, onomastica e ibridazione culturale" },
-        time: "11:10 – 13:10",
+        title: { en: "Religious Language and Power", it: "Linguaggio religioso e potere" },
+        sub: { en: "Authority, Institutions, and Religious Self-Representation", it: "Autorità, istituzioni e autorappresentazione religiosa" },
+        time: "10:00 – 11:25",
         slots: [
-          { time: "11:10 – 11:30", type: "talk", speakerIds: ["gimenez"] },
-          { time: "11:30 – 11:50", type: "talk", speakerIds: ["gillmeister"] },
-          { time: "11:50 – 12:10", type: "talk", speakerIds: ["cristofori"] },
-          { time: "12:10 – 12:30", type: "talk", speakerIds: ["filippini"] },
-          { time: "12:30 – 12:50", type: "talk", speakerIds: ["tosques"] },
-          { time: "12:50 – 13:10", type: "break", title: "Discussion" }
+          { time: "10:00 – 10:20", type: "talk", speakerIds: ["gimenez"] },
+          { time: "10:20 – 10:40", type: "talk", speakerIds: ["filippini"] },
+          { time: "10:40 – 11:00", type: "talk", speakerIds: ["chiari"] },
+          { time: "11:00 – 11:20", type: "talk", speakerIds: ["tosques"] },
+          { time: "11:20 – 11:25", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Lunch break", time: "13:10 – 14:30", isBreak: true },
+      { label: "Coffee break", time: "11:25 – 11:40", isBreak: true },
+      {
+        label: "Session V",
+        chair: "Claude Calame",
+        title: { en: "From Voice to Text", it: "Dalla voce al testo" },
+        sub: { en: "Orality, Writing, and the Transmission of Religious Knowledge", it: "Oralità, scrittura e trasmissione del sapere religioso" },
+        time: "11:40 – 13:30",
+        slots: [
+          { time: "11:40 – 12:00", type: "talk", speakerIds: ["gillmeister"] },
+          { time: "12:00 – 12:20", type: "talk", speakerIds: ["annese"] },
+          { time: "12:20 – 12:40", type: "talk", speakerIds: ["tripaldi"] },
+          { time: "12:40 – 13:00", type: "talk", speakerIds: ["brancaccio"] },
+          { time: "13:00 – 13:20", type: "talk", speakerIds: ["georgoudi"] },
+          { time: "13:20 – 13:30", type: "break", title: "Discussion" }
+        ]
+      },
+      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
       {
         label: "Session VII",
+        chair: "Eberhard Bons",
         title: { en: "Naming, Remembering, and Reconfiguring the Divine", it: "Nominare, ricordare e riconfigurare il divino" },
         sub: { en: "Terminology, Onomastics, and Religious Traditions", it: "Terminologia, onomastica e tradizioni religiose" },
-        time: "14:30 – 16:25",
+        time: "15:00 – 16:25",
         slots: [
-          { time: "14:30 – 14:50", type: "talk", speakerIds: ["bernabe"] },
-          { time: "14:50 – 15:10", type: "talk", speakerIds: ["mura"] },
-          { time: "15:10 – 15:30", type: "talk", speakerIds: ["bednarek"] },
-          { time: "15:30 – 15:50", type: "talk", speakerIds: ["ciarini"] },
-          { time: "15:50 – 16:10", type: "talk", speakerIds: ["chiari"] },
-          { time: "16:10 – 16:25", type: "break", title: "Discussion" }
+          { time: "15:00 – 15:20", type: "talk", speakerIds: ["bernabe"] },
+          { time: "15:20 – 15:40", type: "talk", speakerIds: ["ciarini"] },
+          { time: "15:40 – 16:00", type: "talk", speakerIds: ["mura"] },
+          { time: "16:00 – 16:20", type: "talk", speakerIds: ["bednarek"] },
+          { time: "16:20 – 16:25", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:25 – 16:45", isBreak: true },
+      { label: "Coffee break", time: "16:25 – 16:40", isBreak: true },
       {
         label: "Session VIII",
-        chair: "Luca Arcari",
+        chair: "Andrea Annese",
         title: { en: "Embodied Encounters with the Divine", it: "Incontri incarnati con il divino" },
         sub: { en: "Body, Senses, Incarnation, and Salvation", it: "Corpo, sensi, incarnazione e salvezza" },
-        time: "16:45 – 17:45",
+        time: "16:40 – 17:45",
         slots: [
-          { time: "16:45 – 17:05", type: "talk", speakerIds: ["kajava"] },
-          { time: "17:05 – 17:25", type: "talk", speakerIds: ["camassa"] },
-          { time: "17:25 – 17:45", type: "break", title: "Discussion" }
+          { time: "16:40 – 17:00", type: "talk", speakerIds: ["camassa"] },
+          { time: "17:00 – 17:20", type: "talk", speakerIds: ["kajava"] },
+          { time: "17:20 – 17:40", type: "talk", speakerIds: ["arcari"] },
+          { time: "17:40 – 17:45", type: "break", title: "Discussion" }
         ]
       },
       {
         label: "Concluding remarks",
         time: "17:45 – 18:00",
         slots: [
-          { time: "17:45 – 18:00", type: "break", title: "Final discussion" }
+          { time: "17:45 – 18:00", type: "break", title: "Closing remarks" }
         ]
       }
     ]
@@ -1361,10 +1374,23 @@ list.addEventListener("click", (e) => {
 const overlay = document.getElementById("modal-overlay");
 const modalContent = document.getElementById("modal-content");
 
-function openSpeaker(id, backIds) {
+// Abstract and biography can be read in the other language without changing the
+// language of the site: the card keeps its own reading language (cardLang).
+function langSwitchHtml(cardLang) {
+  const target = cardLang === "it" ? "en" : "it";
+  const label = target === "it" ? "Leggi in italiano" : "Read in English";
+  return `<button class="card-lang-switch" type="button" data-card-lang="${target}">${label}</button>`;
+}
+
+function openSpeaker(id, backIds, cardLang) {
   const sp = speakerById[id];
   if (!sp) return;
-  const data = TR(sp);
+  const lang = cardLang || currentLang;
+  const data = sp[lang] || sp.en;
+  modalContent.dataset.view = "speaker";
+  modalContent.dataset.ids = id;
+  modalContent.dataset.back = backIds ? backIds.join(",") : "";
+  modalContent.dataset.cardLang = lang;
   const backLink = backIds
     ? `<div class="modal-back" data-back="${backIds.join(",")}">${t("modal.back")}</div>`
     : "";
@@ -1374,6 +1400,7 @@ function openSpeaker(id, backIds) {
     <h2>${sp.name}</h2>
     <div class="affil">${sp.affil}</div>
     <div class="talk-title">${talkTitleOf(sp)}</div>
+    ${langSwitchHtml(lang)}
     <div class="info-block">
       <div class="block-label">${t("modal.abstract")}</div>
       <p>${data.abstract}</p>
@@ -1387,13 +1414,20 @@ function openSpeaker(id, backIds) {
 
 // --- Talk view: for talks with more than one speaker, show the shared title/abstract
 //     once, then let the person pick which speaker's biography to open ---
-function openTalk(ids) {
+function openTalk(ids, cardLang) {
   const speakers = ids.map(id => speakerById[id]).filter(Boolean);
   if (speakers.length === 0) return;
-  if (speakers.length === 1) { openSpeaker(speakers[0].id); return; }
+  if (speakers.length === 1) { openSpeaker(speakers[0].id, undefined, cardLang); return; }
+
+  const lang = cardLang || currentLang;
+  const L = sp => sp[lang] || sp.en;
+  modalContent.dataset.view = "talk";
+  modalContent.dataset.ids = ids.join(",");
+  modalContent.dataset.back = "";
+  modalContent.dataset.cardLang = lang;
 
   const talkTitle = talkTitleOf(speakers[0]);
-  const abstract = speakers.map(sp => TR(sp).abstract).find(a => !isPlaceholder(a)) || TR(speakers[0]).abstract;
+  const abstract = speakers.map(sp => L(sp).abstract).find(a => !isPlaceholder(a)) || L(speakers[0]).abstract;
 
   const cardsHtml = speakers.map(sp => `
     <div class="modal-speaker-card" data-speaker="${sp.id}">
@@ -1404,6 +1438,7 @@ function openTalk(ids) {
   modalContent.innerHTML = `
     <div class="modal-eyebrow">${t("modal.talk")}${langLabelsHtml(speakers)}</div>
     <h2>${talkTitle}</h2>
+    ${langSwitchHtml(lang)}
     <div class="info-block">
       <div class="block-label">${t("modal.abstract")}</div>
       <p>${abstract}</p>
@@ -1413,13 +1448,28 @@ function openTalk(ids) {
   overlay.classList.add("open");
 
   modalContent.querySelectorAll(".modal-speaker-card").forEach(card => {
-    card.addEventListener("click", () => openSpeaker(card.dataset.speaker, ids));
+    card.addEventListener("click", (e) => {
+      // Stop the bubble: the document-level [data-speaker] handler would otherwise
+      // reopen the same card without the back link and without its reading language.
+      e.stopPropagation();
+      openSpeaker(card.dataset.speaker, ids, modalContent.dataset.cardLang);
+    });
   });
 }
 
 modalContent.addEventListener("click", (e) => {
+  const switcher = e.target.closest(".card-lang-switch");
+  if (switcher) {
+    e.stopPropagation();
+    const lang = switcher.dataset.cardLang;
+    const ids = modalContent.dataset.ids.split(",");
+    const back = modalContent.dataset.back ? modalContent.dataset.back.split(",") : undefined;
+    if (modalContent.dataset.view === "talk") openTalk(ids, lang);
+    else openSpeaker(ids[0], back, lang);
+    return;
+  }
   const back = e.target.closest(".modal-back");
-  if (back) openTalk(back.dataset.back.split(","));
+  if (back) openTalk(back.dataset.back.split(","), modalContent.dataset.cardLang);
 });
 
 document.addEventListener("click", (e) => {
