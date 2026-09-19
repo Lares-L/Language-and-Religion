@@ -1111,7 +1111,7 @@ const DAYS = [
       { label: "Coffee break", time: "16:40 – 17:00", isBreak: true },
       {
         label: "Session IV",
-        chair: "Stella Georgoudi",
+        chair: "Giorgio Camassa",
         title: { en: "Dealing with the Gods", it: "Trattare con gli dei" },
         sub: { en: "Oracles, Trust, and Religious Dialogue", it: "Oracoli, fiducia e dialogo religioso" },
         time: "17:00 – 18:40",
@@ -1566,3 +1566,22 @@ renderAll();
   });
 })();
 
+
+// --- Scroll reveal ---
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in-view')); return; }
+  var io = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); } });
+  }, {threshold:0.01, rootMargin:'0px 0px 120px 0px'});
+  els.forEach(el => io.observe(el));
+})();
+
+
+
+
+</script>
+<script src="search.js"></script>
+</body>
+</html>
