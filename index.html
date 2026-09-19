@@ -262,6 +262,11 @@
   /* Search box — same pill relief as the day tabs, plus autocomplete dropdown */
   .day-tabs-row{display:flex;justify-content:center;align-items:flex-start;gap:0.9rem;flex-wrap:wrap;margin-bottom:2rem;position:relative;z-index:5}
   .day-tabs-row .day-tabs{margin-bottom:0}
+  .day-jump{display:flex;align-items:baseline;justify-content:center;gap:0.55rem;width:100%;margin:1.4rem 0 0.4rem;padding:0.9rem 0 0;background:none;border:none;border-top:1px solid var(--border);font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color .2s ease}
+  .day-jump:hover{color:var(--green-deep)}
+  .day-jump .dj-day{font-weight:600}
+  .day-jump .dj-arrow{font-size:13px;transition:transform .2s ease}
+  .day-jump:hover .dj-arrow{transform:translateX(3px)}
   .search-tab-wrap{position:relative;flex:1 1 260px;max-width:420px}
   .search-tab{display:flex;align-items:center;gap:0.6rem;background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:0.85rem 1.5rem;width:100%;box-shadow:0 4px 12px rgba(30,58,53,0.05);transition:border-color .2s ease, box-shadow .2s ease}
   .search-tab:focus-within{border-color:var(--green-deep);box-shadow:0 8px 20px rgba(79,125,108,0.15)}
@@ -702,6 +707,7 @@ const STRINGS = {
   "talk.type.plenary": { en: "Lectio inauguralis", it: "Lectio inauguralis" },
   "talk.type.talk": { en: "Talk", it: "Intervento" },
   "session.chair": { en: "Chair", it: "Presiede" },
+  "schedule.next_day": { en: "Next day", it: "Giorno successivo" },
   "talk.count.one": { en: "talk", it: "intervento" },
   "talk.count.many": { en: "talks", it: "interventi" },
   "talk.view_details": { en: "View speaker details →", it: "Vedi la scheda del relatore →" },
@@ -1307,6 +1313,19 @@ function renderSchedule() {
       wrap.appendChild(block);
     });
 
+    const nextDay = DAYS[i + 1];
+    if (nextDay) {
+      const jump = document.createElement("button");
+      jump.className = "day-jump";
+      jump.type = "button";
+      jump.innerHTML = `<span class="dj-label">${t("schedule.next_day")}</span><span class="dj-day">${trDayLabel(nextDay.label)}</span><span class="dj-arrow">&#8594;</span>`;
+      jump.addEventListener("click", () => {
+        showDay(nextDay.id);
+        document.querySelector(".day-tabs-row").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      wrap.appendChild(jump);
+    }
+
     scheduleContainer.appendChild(wrap);
   });
 }
@@ -1547,22 +1566,3 @@ renderAll();
   });
 })();
 
-
-// --- Scroll reveal ---
-(function(){
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in-view')); return; }
-  var io = new IntersectionObserver(entries => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); } });
-  }, {threshold:0.01, rootMargin:'0px 0px 120px 0px'});
-  els.forEach(el => io.observe(el));
-})();
-
-
-
-
-</script>
-<script src="search.js"></script>
-</body>
-</html>
