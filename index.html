@@ -747,7 +747,6 @@ function applyStaticStrings() {
 const SLOT_TITLE_IT = {
   "Welcome and registration": "Accoglienza e registrazione",
   "Introduction": "Introduzione",
-  "Closing remarks": "Osservazioni conclusive",
   "Institutional greetings": "Saluti istituzionali",
   "Discussion": "Discussione",
   "Final discussion": "Discussione finale"
@@ -756,8 +755,7 @@ const SESSION_LABEL_IT = {
   "Session I": "Sessione I", "Session II": "Sessione II", "Session III": "Sessione III", "Session IV": "Sessione IV",
   "Session V": "Sessione V", "Session VI": "Sessione VI", "Session VII": "Sessione VII", "Session VIII": "Sessione VIII",
   "Opening": "Apertura",
-  "Coffee break": "Pausa caffè", "Lunch break": "Pausa pranzo",
-  "Concluding remarks": "Conclusioni"
+  "Coffee break": "Pausa caffè", "Lunch break": "Pausa pranzo"
 };
 function trSlotTitle(s) { return currentLang === "it" ? (SLOT_TITLE_IT[s] || s) : s; }
 function trSessionLabel(s) { return currentLang === "it" ? (SESSION_LABEL_IT[s] || s) : s; }
@@ -766,7 +764,7 @@ function trDayLabel(s) {
   return s.replace("November", "novembre");
 }
 
-const conferenceEnd = new Date(Date.UTC(2026, 10, 24, 17, 0));
+const conferenceEnd = new Date(Date.UTC(2026, 10, 24, 17, 10));
 
 const SPEAKERS = [
 
@@ -807,7 +805,7 @@ const SPEAKERS = [
     id: "bons",
     name: `Eberhard Bons`,
     affil: `Université de Strasbourg`,
-    lang: "en",
+    lang: "it",
     en: { talk: `Communicating the Divine in the Septuagint Between Tradition and Innovation`, abstract: `The aim of this paper is to illustrate the challenges faced by the translators of the Septuagint Bible with regard to the language of the divine, in light of the Greek-Hellenistic cultural and linguistic context. In particular, the terminology and concepts used to delineate the boundary between the divine and the human spheres will be examined, as well as certain titles attributed to the God of Israel. Particular attention will also be devoted to specific innovations introduced by the translators, whose implications extend to the narrative, exegetical, and theological levels. In some cases, these choices contribute to delineating a contrast between the Lord of heaven and earthly rulers, thereby actualizing the message of the Hebrew-Aramaic text.`, bio: `(to be received)` },
     it: { talk: `Comunicare il divino nei Settanta tra tradizione e innovazione`, abstract: `Questo intervento intende illustrare le sfide affrontate dai traduttori della Bibbia dei Settanta riguardo al linguaggio del divino, alla luce del contesto culturale e linguistico greco-ellenistico. In particolare, verranno esaminati la terminologia e i concetti utilizzati per delineare il confine tra la sfera divina e quella umana, oltre ad alcuni titoli attribuiti al Dio d'Israele. Particolare attenzione sarà dedicata anche a specifiche innovazioni introdotte dai traduttori, le cui implicazioni si estendono ai piani narrativo, esegetico e teologico. In alcuni casi, tali scelte contribuiscono a delineare un contrasto tra il Signore dei cieli e i sovrani terreni, attualizzando così il messaggio del testo ebraico-aramaico.`, bio: `(in fase di ricezione)` }
   },
@@ -1066,56 +1064,56 @@ const DAYS = [
         chair: "Manuela Mari",
         title: { en: "Voicing the Sacred", it: "Dare voce al sacro" },
         sub: { en: "Song, Prayer, and Ritual Formula", it: "Canto, preghiera e formula rituale" },
-        time: "09:50 – 11:45",
+        time: "09:50 – 11:40",
         slots: [
           { time: "09:50 – 10:35", type: "keynote", speakerIds: ["calame"] },
           { time: "10:35 – 10:55", type: "talk", speakerIds: ["depoli"] },
           { time: "10:55 – 11:25", type: "talk", speakerIds: ["dozza", "licciardello"] },
-          { time: "11:25 – 11:45", type: "break", title: "Discussion" }
+          { time: "11:25 – 11:40", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "11:45 – 12:00", isBreak: true },
+      { label: "Coffee break", time: "11:40 – 11:55", isBreak: true },
       {
         label: "Session II",
         chair: "Luca Arcari",
         title: { en: "Translating the Divine", it: "Tradurre il divino" },
         sub: { en: "Knowledge, Language, and Religious Imaginaries", it: "Sapere, lingua e immaginari religiosi" },
-        time: "12:00 – 13:25",
+        time: "11:55 – 13:20",
         slots: [
-          { time: "12:00 – 12:20", type: "talk", speakerIds: ["tommasi"] },
-          { time: "12:20 – 12:40", type: "talk", speakerIds: ["bigoni"] },
-          { time: "12:40 – 13:10", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
-          { time: "13:10 – 13:25", type: "break", title: "Discussion" }
+          { time: "11:55 – 12:15", type: "talk", speakerIds: ["tommasi"] },
+          { time: "12:15 – 12:35", type: "talk", speakerIds: ["bigoni"] },
+          { time: "12:35 – 13:05", type: "talk", speakerIds: ["bons", "scialabba", "mambelli"] },
+          { time: "13:05 – 13:20", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Lunch break", time: "13:25 – 14:55", isBreak: true },
+      { label: "Lunch break", time: "13:20 – 14:55", isBreak: true },
       {
         label: "Session III",
         chair: "Alberto Bernabé",
         title: { en: "Regulating the Sacred", it: "Regolare il sacro" },
         sub: { en: "Calendars, Spaces, and Cultic Codes", it: "Calendari, spazi e codici cultuali" },
-        time: "14:55 – 16:35",
+        time: "14:55 – 16:30",
         slots: [
           { time: "14:55 – 15:15", type: "talk", speakerIds: ["rosamilia"] },
           { time: "15:15 – 15:35", type: "talk", speakerIds: ["polinskaya"] },
           { time: "15:35 – 15:55", type: "talk", speakerIds: ["jimenez"] },
           { time: "15:55 – 16:15", type: "talk", speakerIds: ["santamaria"] },
-          { time: "16:15 – 16:35", type: "break", title: "Discussion" }
+          { time: "16:15 – 16:30", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:35 – 16:50", isBreak: true },
+      { label: "Coffee break", time: "16:30 – 16:45", isBreak: true },
       {
         label: "Session IV",
         chair: "Stella Georgoudi",
         title: { en: "Dealing with the Gods", it: "Trattare con gli dei" },
         sub: { en: "Oracles, Trust, and Religious Dialogue", it: "Oracoli, fiducia e dialogo religioso" },
-        time: "16:50 – 18:25",
+        time: "16:45 – 18:25",
         slots: [
-          { time: "16:50 – 17:10", type: "talk", speakerIds: ["mari"] },
-          { time: "17:10 – 17:30", type: "talk", speakerIds: ["borgatti"] },
-          { time: "17:30 – 17:50", type: "talk", speakerIds: ["gordillo"] },
-          { time: "17:50 – 18:10", type: "talk", speakerIds: ["cristofori"] },
-          { time: "18:10 – 18:25", type: "break", title: "Discussion" }
+          { time: "16:45 – 17:05", type: "talk", speakerIds: ["mari"] },
+          { time: "17:05 – 17:25", type: "talk", speakerIds: ["borgatti"] },
+          { time: "17:25 – 17:45", type: "talk", speakerIds: ["gordillo"] },
+          { time: "17:45 – 18:05", type: "talk", speakerIds: ["cristofori"] },
+          { time: "18:05 – 18:25", type: "break", title: "Discussion" }
         ]
       }
     ]
@@ -1126,68 +1124,61 @@ const DAYS = [
     sessions: [
       {
         label: "Session V",
-        chair: "Rocío Gordillo Hervás",
-        title: { en: "Religious Language and Power", it: "Linguaggio religioso e potere" },
-        sub: { en: "Authority, Institutions, and Religious Self-Representation", it: "Autorità, istituzioni e autorappresentazione religiosa" },
-        time: "10:00 – 11:25",
+        chair: "Claude Calame",
+        title: { en: "From Voice to Text", it: "Dalla voce al testo" },
+        sub: { en: "Orality, Writing, and the Transmission of Religious Knowledge", it: "Oralità, scrittura e trasmissione del sapere religioso" },
+        time: "09:30 – 11:25",
         slots: [
-          { time: "10:00 – 10:20", type: "talk", speakerIds: ["gimenez"] },
-          { time: "10:20 – 10:40", type: "talk", speakerIds: ["filippini"] },
-          { time: "10:40 – 11:00", type: "talk", speakerIds: ["chiari"] },
-          { time: "11:00 – 11:20", type: "talk", speakerIds: ["tosques"] },
-          { time: "11:20 – 11:25", type: "break", title: "Discussion" }
+          { time: "09:30 – 09:50", type: "talk", speakerIds: ["gillmeister"] },
+          { time: "09:50 – 10:10", type: "talk", speakerIds: ["annese"] },
+          { time: "10:10 – 10:30", type: "talk", speakerIds: ["tripaldi"] },
+          { time: "10:30 – 10:50", type: "talk", speakerIds: ["brancaccio"] },
+          { time: "10:50 – 11:10", type: "talk", speakerIds: ["georgoudi"] },
+          { time: "11:10 – 11:25", type: "break", title: "Discussion" }
         ]
       },
       { label: "Coffee break", time: "11:25 – 11:40", isBreak: true },
       {
         label: "Session VI",
-        chair: "Claude Calame",
-        title: { en: "From Voice to Text", it: "Dalla voce al testo" },
-        sub: { en: "Orality, Writing, and the Transmission of Religious Knowledge", it: "Oralità, scrittura e trasmissione del sapere religioso" },
-        time: "11:40 – 13:30",
+        chair: "Rocío Gordillo Hervás",
+        title: { en: "Religious Language and Power", it: "Linguaggio religioso e potere" },
+        sub: { en: "Authority, Institutions, and Religious Self-Representation", it: "Autorità, istituzioni e autorappresentazione religiosa" },
+        time: "11:40 – 13:15",
         slots: [
-          { time: "11:40 – 12:00", type: "talk", speakerIds: ["gillmeister"] },
-          { time: "12:00 – 12:20", type: "talk", speakerIds: ["annese"] },
-          { time: "12:20 – 12:40", type: "talk", speakerIds: ["tripaldi"] },
-          { time: "12:40 – 13:00", type: "talk", speakerIds: ["brancaccio"] },
-          { time: "13:00 – 13:20", type: "talk", speakerIds: ["georgoudi"] },
-          { time: "13:20 – 13:30", type: "break", title: "Discussion" }
+          { time: "11:40 – 12:00", type: "talk", speakerIds: ["gimenez"] },
+          { time: "12:00 – 12:20", type: "talk", speakerIds: ["filippini"] },
+          { time: "12:20 – 12:40", type: "talk", speakerIds: ["chiari"] },
+          { time: "12:40 – 13:00", type: "talk", speakerIds: ["tosques"] },
+          { time: "13:00 – 13:15", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Lunch break", time: "13:30 – 15:00", isBreak: true },
+      { label: "Lunch break", time: "13:15 – 15:00", isBreak: true },
       {
         label: "Session VII",
         chair: "Eberhard Bons",
         title: { en: "Naming, Remembering, and Reconfiguring the Divine", it: "Nominare, ricordare e riconfigurare il divino" },
         sub: { en: "Terminology, Onomastics, and Religious Traditions", it: "Terminologia, onomastica e tradizioni religiose" },
-        time: "15:00 – 16:25",
+        time: "15:00 – 16:35",
         slots: [
           { time: "15:00 – 15:20", type: "talk", speakerIds: ["bernabe"] },
           { time: "15:20 – 15:40", type: "talk", speakerIds: ["ciarini"] },
           { time: "15:40 – 16:00", type: "talk", speakerIds: ["mura"] },
           { time: "16:00 – 16:20", type: "talk", speakerIds: ["bednarek"] },
-          { time: "16:20 – 16:25", type: "break", title: "Discussion" }
+          { time: "16:20 – 16:35", type: "break", title: "Discussion" }
         ]
       },
-      { label: "Coffee break", time: "16:25 – 16:40", isBreak: true },
+      { label: "Coffee break", time: "16:35 – 16:50", isBreak: true },
       {
         label: "Session VIII",
         chair: "Andrea Annese",
         title: { en: "Embodied Encounters with the Divine", it: "Incontri incarnati con il divino" },
         sub: { en: "Body, Senses, Incarnation, and Salvation", it: "Corpo, sensi, incarnazione e salvezza" },
-        time: "16:40 – 17:45",
+        time: "16:50 – 18:10",
         slots: [
-          { time: "16:40 – 17:00", type: "talk", speakerIds: ["camassa"] },
-          { time: "17:00 – 17:20", type: "talk", speakerIds: ["kajava"] },
-          { time: "17:20 – 17:40", type: "talk", speakerIds: ["arcari"] },
-          { time: "17:40 – 17:45", type: "break", title: "Discussion" }
-        ]
-      },
-      {
-        label: "Concluding remarks",
-        time: "17:45 – 18:00",
-        slots: [
-          { time: "17:45 – 18:00", type: "break", title: "Closing remarks" }
+          { time: "16:50 – 17:10", type: "talk", speakerIds: ["camassa"] },
+          { time: "17:10 – 17:30", type: "talk", speakerIds: ["kajava"] },
+          { time: "17:30 – 17:50", type: "talk", speakerIds: ["arcari"] },
+          { time: "17:50 – 18:10", type: "break", title: "Discussion" }
         ]
       }
     ]
@@ -1512,7 +1503,7 @@ renderAll();
     const pad = n => String(n).padStart(2, "0");
     const fmt = d => `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
     const start = new Date(Date.UTC(2026, 10, 23, 8, 30)); // 09:30 CET
-    const end = conferenceEnd; // 24 Nov 2026, 18:00 CET
+    const end = conferenceEnd; // 24 Nov 2026, 18:10 CET
     const title = currentLang === "it"
       ? "Religions and Language / Languages and Religion — Convegno LARES"
       : "Religions and Language / Languages and Religion — LARES Conference";
