@@ -40,6 +40,17 @@
     return sp.en || sp;
   }
 
+  // Titles of the speaker's downloadable materials (materials.js), so that
+  // searching e.g. "handout" or "slides" also finds them.
+  function materialsText(id) {
+    if (typeof MATERIALS === "undefined" || !MATERIALS[id]) return "";
+    return MATERIALS[id].map(m => {
+      const t = m.title;
+      const titles = !t ? "" : typeof t === "string" ? t : Object.values(t).join(" ");
+      return titles + " " + (m.type || "") + " " + (m.file || "");
+    }).join(" ").toLowerCase();
+  }
+
   function search(query) {
     const q = norm(query);
     if (q.length < MIN_CHARS || typeof SPEAKERS === "undefined") return [];
@@ -47,7 +58,7 @@
     const matches = [];
     for (const sp of SPEAKERS) {
       const data = speakerData(sp);
-      const haystack = norm(sp.name) + " " + norm(sp.affil) + " " + norm(data.talk) + " " + norm(data.abstract) + " " + norm(data.bio);
+      const haystack = norm(sp.name) + " " + norm(sp.affil) + " " + norm(data.talk) + " " + norm(data.abstract) + " " + norm(data.bio) + " " + materialsText(sp.id);
       if (haystack.indexOf(q) !== -1) {
         matches.push({ id: sp.id, name: sp.name, talk: data.talk });
         if (matches.length >= MAX_RESULTS) break;
