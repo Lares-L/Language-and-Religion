@@ -79,6 +79,9 @@ const MATERIALS = {
     .material-item .mi-title{font-size:16px;flex:1 1 auto}
     .material-item .mi-meta{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase}
     .material-item .mi-action{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;color:var(--green-deep);text-transform:uppercase}
+    .materials-jump{position:absolute;top:1.25rem;right:3.2rem;background:none;border:1px solid var(--border);border-radius:999px;padding:0.25rem 0.7rem;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-deep);cursor:pointer;transition:border-color .15s ease, color .15s ease}
+    .materials-jump:hover{border-color:var(--green-deep);color:var(--ink)}
+    @media (max-width:600px){.materials-jump{top:0.95rem;right:3.6rem}}
   `;
   document.head.appendChild(style);
 
@@ -87,9 +90,22 @@ const MATERIALS = {
 
   function append() {
     const ids = (content.dataset.ids || "").split(",").filter(Boolean);
-    const html = blockHtml(ids, lang(content.dataset.cardLang));
-    if (html) content.insertAdjacentHTML("beforeend", html);
+    const l = lang(content.dataset.cardLang);
+    const html = blockHtml(ids, l);
+    if (!html) return;
+    content.insertAdjacentHTML("beforeend", html);
+    // Small "Materials ↓" link at the top right of the card, so the downloads
+    // at the bottom are not missed; it scrolls the card down to them.
+    content.insertAdjacentHTML("afterbegin",
+      `<button type="button" class="materials-jump">${LABEL[l] || LABEL.en} &#8595;</button>`);
   }
+
+  content.addEventListener("click", (e) => {
+    if (!e.target.closest(".materials-jump")) return;
+    e.stopPropagation();
+    const block = content.querySelector(".materials-block");
+    if (block) block.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   // Global function declarations from index.html: reassigning them here also
   // changes the calls made from inside index.html (click handlers, back link,
