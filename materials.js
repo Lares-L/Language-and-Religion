@@ -25,6 +25,9 @@ const MATERIALS_TAG = "materials";
 const MATERIALS_BASE = "https://github.com/Lares-L/Language-and-Religion/releases/download/" + MATERIALS_TAG + "/";
 
 const MATERIALS = {
+  tripaldi: [
+    { file: "tripaldi-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "675 KB" }
+  ],
   // calame: [
   //   { file: "calame-handout.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "1.2 MB" },
   //   { file: "calame-slides.pptx", title: { en: "Slides", it: "Slide" }, type: "PPTX", size: "18 MB" }
