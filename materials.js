@@ -25,6 +25,9 @@ const MATERIALS_TAG = "materials";
 const MATERIALS_BASE = "https://github.com/Lares-L/Language-and-Religion/releases/download/" + MATERIALS_TAG + "/";
 
 const MATERIALS = {
+  ciarini: [
+    { file: "ciarini-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "690 KB" }
+  ],
   bernabe: [
     { file: "handout-bernabe.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "6.3 MB" }
   ],
