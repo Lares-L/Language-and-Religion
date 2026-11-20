@@ -26,9 +26,11 @@ const MATERIALS_BASE = "https://github.com/Lares-L/Language-and-Religion/release
 
 const MATERIALS = {
   licciardello: [
+    { file: "licciardello-dozza-handout.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "381 KB" },
     { file: "licciardello-dozza-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "3.6 MB" }
   ],
   dozza: [
+    { file: "licciardello-dozza-handout.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "381 KB" },
     { file: "licciardello-dozza-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "3.6 MB" }
   ],
   ciarini: [
