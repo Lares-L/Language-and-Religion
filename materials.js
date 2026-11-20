@@ -25,6 +25,12 @@ const MATERIALS_TAG = "materials";
 const MATERIALS_BASE = "https://github.com/Lares-L/Language-and-Religion/releases/download/" + MATERIALS_TAG + "/";
 
 const MATERIALS = {
+  licciardello: [
+    { file: "licciardello-dozza-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "3.6 MB" }
+  ],
+  dozza: [
+    { file: "licciardello-dozza-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "3.6 MB" }
+  ],
   ciarini: [
     { file: "ciarini-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "690 KB" }
   ],
@@ -60,7 +66,11 @@ const MATERIALS = {
 
   function blockHtml(ids, l) {
     const items = [];
-    ids.forEach(id => (MATERIALS[id] || []).forEach(m => items.push(m)));
+    const seen = new Set();
+    ids.forEach(id => (MATERIALS[id] || []).forEach(m => {
+      const key = m.url || m.file;
+      if (!seen.has(key)) { seen.add(key); items.push(m); }
+    }));
     if (items.length === 0) return "";
     const rows = items.map(m => {
       const meta = [m.type, m.size].filter(Boolean).map(esc).join(" · ");
