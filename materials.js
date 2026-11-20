@@ -35,7 +35,7 @@ const MATERIALS = {
     { file: "ciarini-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "690 KB" }
   ],
   bernabe: [
-    { file: "handout-bernabe.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "6.3 MB" }
+    { file: "handout-bernabe.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "6.2 MB" }
   ],
   tripaldi: [
     { file: "tripaldi-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "675 KB" }
