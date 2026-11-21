@@ -25,6 +25,9 @@ const MATERIALS_TAG = "materials";
 const MATERIALS_BASE = "https://github.com/Lares-L/Language-and-Religion/releases/download/" + MATERIALS_TAG + "/";
 
 const MATERIALS = {
+  depoli: [
+    { file: "depoli-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "347 KB" }
+  ],
   licciardello: [
     { file: "licciardello-dozza-handout.pdf", title: { en: "Handout", it: "Handout" }, type: "PDF", size: "381 KB" },
     { file: "licciardello-dozza-slides.pdf", title: { en: "Slides", it: "Slide" }, type: "PDF", size: "3.6 MB" }
